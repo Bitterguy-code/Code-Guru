@@ -1,0 +1,27 @@
+.topnav {
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  height: 5vw;
+  border-bottom: 2px solid black;
+  padding: 2px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.topnav a {
+  text-decoration: none;
+  color: black;
+  padding: 20px;
+}
+
+.topnav a:hover {
+  font-weight: bold;
+}
+
+.topnav_align_left {
+  flex-grow: 1;
+}
