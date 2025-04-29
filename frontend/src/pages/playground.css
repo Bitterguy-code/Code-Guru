@@ -1,0 +1,31 @@
+.playground_container{
+    display:flex;
+    
+}
+.playground_left_container {
+  display: flex;
+  width: 50%;
+  height:90vh;
+  background: red;
+}
+
+#playground_code_container {
+  height: 50vh;
+  width: 50vh;
+  border: 1px solid black;
+  background: greenyellow;
+}
+
+.playground_prompt {
+  background: pink;
+}
+
+.playground_right_container {
+  display: flex;
+  width: 50%;
+  height:90vh;
+  background: orange;
+}
+.playground_correction {
+  background: blue;
+}
