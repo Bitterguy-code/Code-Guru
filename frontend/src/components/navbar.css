@@ -24,4 +24,6 @@
 
 .topnav_align_left {
   flex-grow: 1;
+  display:flex;
+  align-items: center;
 }

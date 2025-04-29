@@ -1,13 +1,19 @@
-@import "tailwindcss";
+/* placed here so that custom css overrides */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-html {
-  scroll-padding-top: 5.3vw;
+/* Offset navbar */
+#root {
+  margin-top: calc(5vw + 2px);
 }
 
 body {
-  margin: 0;
-  padding: 0;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  padding-top: 5.4vw;
+  scroll-behavior: smooth;
+}
+html,
+body {
+  margin: 0;
 }
