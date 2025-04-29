@@ -1,4 +1,4 @@
-function ChallengesHomePage() {
+export default function ChallengesHomePage() {
 
     return ( 
     <>
@@ -7,7 +7,5 @@ function ChallengesHomePage() {
     
     
     </>
-)
+  )
 };
-
-  export default  ChallengesHomePage;
