@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'user',
     'account',
-    'language'
+    'language',
+    'challenge_app',
 ]
 
 MIDDLEWARE = [
