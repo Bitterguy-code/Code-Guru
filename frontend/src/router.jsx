@@ -1,9 +1,10 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
-import App from "./App.jsx"
+import App from "./App.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ChallengesHomePage from "./pages/ChallengesHomePage.jsx";
 import NewsletterPage from "./pages/NewsletterPage.jsx";
+import PlaygroundPage from "./pages/PlaygroundPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/challenge",
-        element: <ChallengesHomePage/>,
+        element: <ChallengesHomePage/>
+      },
+      {
+        path: "/playground",
+        element: <PlaygroundPage/>,
       },
       {
         path: "/newsletter",

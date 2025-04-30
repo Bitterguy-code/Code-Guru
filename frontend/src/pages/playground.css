@@ -1,0 +1,41 @@
+.playground_container {
+  display: flex;
+  height:100%;
+  width:100%;
+}
+.playground_left_container {
+  display: flex;
+  padding: 10px;
+  width: 50%;
+  height: 84vh;
+  flex-direction: column;
+}
+#coding_language {
+  height: 1.5vw;
+  width: 10vw;
+}
+
+#playground_code_container {
+  height: 60vh;
+  width: 100%;
+  border: 1px solid black;
+  background: greenyellow;
+}
+
+.playground_right_container {
+  display: flex;
+  padding: 10px;
+  width: 50%;
+  height: 84vh;
+}
+.playground_correction {
+  border: 1px black solid;
+  border-radius: 5px;
+  width:100%;
+  padding:10px;
+}
+
+#playground_prompt_input {
+  width: 99.5%;
+  resize: none;
+}
