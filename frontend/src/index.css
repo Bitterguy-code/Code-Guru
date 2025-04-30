@@ -1,7 +1,8 @@
 /* placed here so that custom css overrides */
-@tailwind base;
-@tailwind components;
+/* @tailwind base; */
+/* @tailwind components;  */
 @tailwind utilities;
+@import "tailwindcss";
 
 /* Offset navbar */
 #root {
