@@ -10,19 +10,16 @@ export default function NavBar() {
         </a>
         <a href="/playground">Playground</a>
         <a href="/challenge">Daily Challenge</a>
-        <a>Newsletter</a>
+        <a href="/history">Challenge History</a>
+        <a href="/newsletter">Newsletter</a>
         <a>Community</a>
         <a>Progress</a>
       </div>
 
       <div className="topnav_align_right">
         <>
-          <a href="/signup">
-            Sign Up
-          </a>
-          <a href="/login">
-            Log In
-          </a>
+          <a href="/signup">Sign Up</a>
+          <a href="/login">Log In</a>
         </>
       </div>
     </div>

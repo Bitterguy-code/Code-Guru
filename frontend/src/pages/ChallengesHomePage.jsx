@@ -1,14 +1,27 @@
+import * as monaco from "monaco-editor";
+import { useEffect, useState, useRef } from "react";
+import MonacoEditor from "../components/monacoEditor";
+import Button from 'react-bootstrap/Button';
+import { getDailyChallengeData } from "../utilities";
+
+
 export default function ChallengesHomePage() {
+
+
+    useEffect(()=>{
+      getDailyChallengeData()
+    },[])
 
     return ( 
     <>
-    <h1>this is Challenges home page</h1>
-    {/* <div className="w-screen h-screen bg-gray-100"> */}
-      {/* <iframe className="w-5/6 h-5/6" src="https://leetcode.com/problems/count-subarrays-where-max-element-appears-at-least-k-times/"></iframe> */}
 
 
-  <div className="flex">
-    <div className=" mx-auto p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
+  
+  <div className="flex">{/* this holds 2 columns */}
+
+
+    {/*columns: 1/2 */}
+    <section className=" mx-auto p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
       <p className="text-base sm:text-lg mb-4 break-words">
         Given an array 
         <code className="bg-gray-100 px-1 py-0.5 rounded ">nums</code> of integers,
@@ -71,27 +84,64 @@ export default function ChallengesHomePage() {
           </li>
         </ul>
       </div>
-    </div>
+    </section>
 
 
-    {/* second columz */}
-    <div className="w-1/2">
-      <div className="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
+    {/* columns: 2/2*/}
+    <section className="w-1/2">
 
-      </div>
-      <div className="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
+      {/* row: 1/2*/}
+      <div className="max-w-3xl mx-auto h-3/4 p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
+        
+      {/* <div id="playground_code_container"></div> */}
+        <MonacoEditor language={"javascript"}/>
         
       </div>
-    </div>
-    
+
+      {/* row: 2/2*/}
+      <div className="max-w-3xl mx-auto h-1/4 p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
+        
+        <div className="flex flex-col gap-1">
+          
+          <div className="flex gap-2">
+             <Button>run</Button>
+             <Button>submit</Button>
+          </div>
+          <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
+             <h1 >Input:</h1>
+             <h1>[12,345,2,6,7896]</h1>
+          </div>
+          <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
+             <h1 >Output: </h1>
+             <h1>undefined</h1>
+
+          </div>
+          <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
+             <h1 >Expected: </h1>
+             <h1>2</h1>
+
+          </div>
+        
+      
+        
+        {/* <ul className="list-disc pl-5 space-y-1 text-sm sm:text-base break-words">
+          <li>
+            <code className="bg-gray-100 px-1 py-0.5 rounded block">
+              1 &lt;= nums.length &lt;= 500
+            </code>
+          </li>
+          <li>
+            <code className="bg-gray-100 px-1 py-0.5 rounded block">
+              1 &lt;= nums[i] &lt;= 10<sup>5</sup>
+            </code>
+          </li>
+        </ul> */}
+        </div>
+      </div>
+    </section>
   </div>
   
-
-
-
-    {/* </div> */}
-    
-    
+      
     </>
   )
 };

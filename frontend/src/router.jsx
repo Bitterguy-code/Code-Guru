@@ -7,6 +7,7 @@ import NewsletterPage from "./pages/NewsletterPage.jsx";
 import PlaygroundPage from "./pages/PlaygroundPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LogInPage from "./pages/LogInPage.jsx";
+import ChallengesHistoryPage from "./pages/ChallengesHistoryPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/challenge",
         element: <ChallengesHomePage />,
+      },
+      {
+        path: "/history",
+        element: <ChallengesHistoryPage/>
       },
       {
         path: "/playground",
