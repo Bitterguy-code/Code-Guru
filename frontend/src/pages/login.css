@@ -1,0 +1,6 @@
+.login_container {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  background-image: radial-gradient(#497849, #184936, black);
+}
