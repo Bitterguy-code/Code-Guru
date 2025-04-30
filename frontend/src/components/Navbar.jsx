@@ -12,16 +12,16 @@ export default function NavBar() {
         <a href="/challenge">Daily Challenge</a>
         <a>Newsletter</a>
         <a>Community</a>
+        <a>Progress</a>
       </div>
 
       <div className="topnav_align_right">
         <>
-          <a>Progress</a>
           <a href="/signup">
-            <button type="button">Sign Up</button>
+            Sign Up
           </a>
           <a href="/login">
-            <button type="button">Log In</button>
+            Log In
           </a>
         </>
       </div>
