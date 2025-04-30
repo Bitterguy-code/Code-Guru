@@ -94,7 +94,7 @@ export default function ChallengesHomePage() {
       <div className="max-w-3xl mx-auto h-3/4 p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
         
       {/* <div id="playground_code_container"></div> */}
-        <MonacoEditor/>
+        <MonacoEditor language={"javascript"}/>
         
       </div>
 

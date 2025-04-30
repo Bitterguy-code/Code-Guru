@@ -29,9 +29,11 @@ export function getDate(){
 
 export async function getDailyChallengeData(){
     const currentDate = getDate()
-    let response = await api.get(f`challenge/${currentDate}/`,{})
+    let response = await api.get(`challenge/${currentDate}/`,{})
 
     if(response.status === 200){
+        console.log(response.data)
+    }else{
         console.log(response.data)
     }
 
