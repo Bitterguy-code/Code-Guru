@@ -10,7 +10,7 @@ export default function NavBar() {
         </a>
         <a href="/playground">Playground</a>
         <a href="/challenge">Daily Challenge</a>
-        <a href="/challenge">Challenge History</a>
+        <a href="/history">Challenge History</a>
         <a href="/newsletter">Newsletter</a>
         <a >Community</a>
       </div>
