@@ -1,5 +1,5 @@
 import "./navbar.css";
-import codeGuruLogo from "../assets/codeGuruLogo.png";
+import codeGuruLogo from "../assets/codeGuruLogoTransparent.png";
 
 export default function NavBar() {
   return (

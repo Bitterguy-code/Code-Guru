@@ -1,3 +1,5 @@
+import "./home.css"
+
 export default function HomePage() {
-  return <h1>this is home page</h1>;
+  return <div className="home_container">this is home page</div>;
 }

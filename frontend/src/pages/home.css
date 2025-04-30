@@ -1,0 +1,8 @@
+.home_container {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  background-image: url("../assets/homeBackground.png");
+  background-size:cover;
+  background-position:center 60%;
+}
