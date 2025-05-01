@@ -1,4 +1,6 @@
 from django.db import models
+from account_app.models import Account
+
 
 class Challenge(models.Model):
     date = models.DateTimeField(null=True)
@@ -9,5 +11,7 @@ class Challenge(models.Model):
     hints = models.CharField(null=True)
 
 class Answer(models.Model):
-    pass
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='answer')
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, related_name='answer')
+
 

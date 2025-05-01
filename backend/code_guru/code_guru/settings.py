@@ -39,11 +39,27 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'user',
-    'account',
+    'user_app',
+    'account_app',
     'language',
     'challenge_app',
+
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+
 ]
+
+AUTH_USER_MODEL = 'user_app.User' 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
