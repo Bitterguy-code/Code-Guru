@@ -5,10 +5,10 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordRepeat, setpasswordRepeat] = useState("");
+  const [passwordConfirm, setpasswordConfirm] = useState("");
   const handleForm = async (e) => {
     e.preventDefault();
-    if (password !== passwordRepeat) {
+    if (password !== passwordConfirm) {
       alert("Passwords do not match");
       return;
     } else {
@@ -24,7 +24,7 @@ export default function SignUpPage() {
         <form className="signup_form">
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder="Email"
             size="30"
             required
             value={email}
@@ -33,7 +33,7 @@ export default function SignUpPage() {
           <br />
           <input
             type="text"
-            placeholder="Enter your username"
+            placeholder="Username"
             size="30"
             required
             value={username}
@@ -42,7 +42,7 @@ export default function SignUpPage() {
           <br />
           <input
             type="password"
-            placeholder="Enter password"
+            placeholder="Password"
             size="30"
             required
             value={password}
@@ -51,11 +51,11 @@ export default function SignUpPage() {
           <br />
           <input
             type="password"
-            placeholder="Repeat password"
+            placeholder="Confirm password"
             size="30"
             required
-            value={passwordRepeat}
-            onChange={(e) => setpasswordRepeat(e.target.value)}
+            value={passwordConfirm}
+            onChange={(e) => setpasswordConfirm(e.target.value)}
           ></input>
           <br />
           <button onClick={handleForm}>Sign Up</button>
