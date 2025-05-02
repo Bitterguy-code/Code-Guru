@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import ChallengeCard from "../components/ChallengeCard";
 
 
-export default function ChallengesHistoryPage() {
+export default function ChallengeHistoryPage() {
 
     return ( 
     <>

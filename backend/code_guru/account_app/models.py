@@ -8,4 +8,7 @@ class Account(models.Model):
     position = models.TextField(null=True)
     years = models.IntegerField(null=True)
     goals = models.TextField(null=True)
+
+    def __str__(self):
+        return f"({self.user}' account)"
     
