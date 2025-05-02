@@ -1,8 +1,7 @@
 import "./playground.css";
-import * as monaco from "monaco-editor";
 import MonacoEditor from "../components/monacoEditor";
 
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 
 export default function PlaygroundPage() {
   const editorRef = useRef(null); //useRef used for editor because don't want it to be re-rendered
@@ -19,16 +18,12 @@ hello();`);
   //     console.log(codingLanguage);
   //   }, [codingLanguage]);
 
-  //handle coding language change
-  useEffect(() => {
-    if (!editorRef.current) return;
-    const model = editorRef.current.getModel();
-    monaco.editor.setModelLanguage(model, codingLanguage);
-  }, [codingLanguage]);
+
 
   const handleClick = () => {
-    setValue(editorRef.current.getValue()); //TODO: get editor to setValue on change
+    console.log("the value is")
     console.log(value);
+    console.log("the user question is")
     console.log(userQuestion);
   }; //TODO: send request to api with value, question. get answer
 
@@ -46,7 +41,7 @@ hello();`);
         </select>
         <br />
         <div id="playground_code_container">
-          <MonacoEditor language={codingLanguage} />
+          <MonacoEditor language={codingLanguage} value={value} />
         </div>
         <div className="playground_prompt">
           <br />

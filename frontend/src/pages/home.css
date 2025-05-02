@@ -30,7 +30,7 @@
 }
 
 /* optional green box for home page if want to put more details */
-/* .home_right_container {
+.home_right_container {
   background-color: #486f2e;
   margin-top: 5%;
   margin-left: 25%;
@@ -38,4 +38,8 @@
   height: 50%;
   border: 1px solid #143d23;
   border-radius: 5px;
-} */
+  font-size: 3vw;
+  font-weight: bold;
+  text-align: center;
+  align-content: center;
+}
