@@ -1,5 +1,5 @@
 import "./navbar.css";
-import codeGuruLogo from "../assets/codeGuruLogo.png";
+import codeGuruLogo from "../assets/codeGuruLogoTransparent.png";
 
 export default function NavBar() {
   return (
@@ -12,18 +12,14 @@ export default function NavBar() {
         <a href="/challenge">Daily Challenge</a>
         <a href="/history">Challenge History</a>
         <a href="/newsletter">Newsletter</a>
-        <a >Community</a>
+        <a>Community</a>
+        <a>Progress</a>
       </div>
 
       <div className="topnav_align_right">
         <>
-          <a>Progress</a>
-          <a href="/signup">
-            <button type="button">Sign Up</button>
-          </a>
-          <a href="/login">
-            <button type="button">Log In</button>
-          </a>
+          <a href="/signup">Sign Up</a>
+          <a href="/login">Log In</a>
         </>
       </div>
     </div>

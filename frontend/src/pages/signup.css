@@ -1,0 +1,46 @@
+.signup_container {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  background-image: url("../assets/signUpBackground.png");
+  background-size: cover;
+  background-position: center 70%;
+}
+
+.signup_left {
+  width: 50%;
+  height: 100%;
+}
+
+.signup_right {
+  width: 50%;
+  height: 100%;
+  /* background-color:white; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup_form {
+  text-align: center;
+  width: 100%;
+}
+
+.signup_form input,
+.signup_form button {
+  font-size: 2.5vw;
+  color: white;
+}
+
+.signup_form button {
+  background-color: #477647;
+  padding: 10px;
+}
+
+.signup_form input {
+  color: white;
+  border: 0;
+  border-bottom: 1px solid white;
+  margin: 10px;
+  background: local;
+}
