@@ -30,7 +30,7 @@ export default function ChallengeDailyPage() {
     },[dailyChallengeData])
     useEffect(()=>{
       console.log(editorCode)
-      setAPIAnswer()
+      // setAPIAnswer()
     },[editorCode])
 
 

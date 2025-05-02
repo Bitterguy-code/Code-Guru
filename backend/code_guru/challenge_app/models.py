@@ -10,6 +10,8 @@ class Challenge(models.Model):
     question = models.CharField(null=True)
     hints = models.CharField(null=True)
     html = models.TextField(null=True)
+    # answer
+    # input
 
     def __str__(self):
         return f"Challenge({self.date})"
