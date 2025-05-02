@@ -4,7 +4,7 @@ import MonacoEditor from "../components/monacoEditor";
 import Button from 'react-bootstrap/Button';
 
 
-export default function ChallengesHistoryPage() {
+export default function ChallengeHistoryPage() {
 
     return ( 
     <>

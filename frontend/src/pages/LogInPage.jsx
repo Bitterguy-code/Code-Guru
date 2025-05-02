@@ -1,7 +1,7 @@
 import "./login.css";
 import { useState } from "react";
 
-export default function LoginPage() {
+export default function LogInPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

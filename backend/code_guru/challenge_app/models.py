@@ -9,9 +9,27 @@ class Challenge(models.Model):
     difficulty = models.CharField(null=True)
     question = models.CharField(null=True)
     hints = models.CharField(null=True)
+    html = models.TextField(null=True)
+
+    def __str__(self):
+        return f"Challenge({self.date})"
+    
+    def setHTML(self,htmlString):
+        self.html = htmlString
+        self.save()
+
 
 class Answer(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='answer')
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, related_name='answer')
+    code = models.TextField(null= True)
+
+    def setCode(self,code):
+        self.code = code
+        self.save()
+    
+    def __str__(self):
+        return f"(Answer of {self.account} for {self.challenge})"
+
 
 
