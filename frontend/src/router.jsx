@@ -5,13 +5,9 @@ import HomePage from "./pages/HomePage.jsx";
 import ChallengeDailyPage from "./pages/ChallengeDailyPage.jsx";
 import NewsletterPage from "./pages/NewsletterPage.jsx";
 import PlaygroundPage from "./pages/PlaygroundPage.jsx";
-<<<<<<< HEAD
 import ChallengeHistoryPage from "./pages/ChallengeHistoryPage.jsx";
-=======
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LogInPage from "./pages/LogInPage.jsx";
-import ChallengesHistoryPage from "./pages/ChallengesHistoryPage.jsx";
->>>>>>> main
 
 const router = createBrowserRouter([
   {
@@ -24,11 +20,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/challenge",
-<<<<<<< HEAD
         element: <ChallengeDailyPage/>
-=======
-        element: <ChallengesHomePage />,
->>>>>>> main
       },
       {
         path: "/history",
@@ -44,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/signup",
-        element: <SignUpPage />,
+        element: <SignUpPage/>,
       },
       {
         path: "/login",
