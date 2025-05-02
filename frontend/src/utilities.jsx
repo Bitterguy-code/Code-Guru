@@ -27,15 +27,28 @@ export function getDate(){
 
 
 
-export async function getDailyChallengeData(){
+export async function getAPIDailyChallengeData(){
     const currentDate = getDate()
-    let response = await api.get(`challenge/${currentDate}/`,{})
+    let response = await api.get(`challenge/html/${currentDate}/`, {})
 
     if(response.status === 200){
-        console.log(response.data)
+        return response.data
     }else{
         console.log(response.data)
     }
 
     return null
    }
+
+export async function putAPIDailyChallengeAnswer(challengeID,answerCode){
+    api.defaults.headers.common["Authorization"] = "Token 73ae179ee705ce29b4a024b0a1f6d2961fd46258" // this is a test token
+    let response = await api.put("challenge/answer/", {
+        "challengeID": challengeID,
+        "answerCode": answerCode
+    })
+
+    if(response.status === 200){
+        console.log(response.data)
+    }
+
+}

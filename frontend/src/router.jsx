@@ -2,10 +2,10 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import HomePage from "./pages/HomePage.jsx";
-import ChallengesHomePage from "./pages/ChallengesHomePage.jsx";
+import ChallengeDailyPage from "./pages/ChallengeDailyPage.jsx";
 import NewsletterPage from "./pages/NewsletterPage.jsx";
 import PlaygroundPage from "./pages/PlaygroundPage.jsx";
-import ChallengesHistoryPage from "./pages/ChallengesHistoryPage.jsx";
+import ChallengeHistoryPage from "./pages/ChallengeHistoryPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,11 +18,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/challenge",
-        element: <ChallengesHomePage/>
+        element: <ChallengeDailyPage/>
       },
       {
         path: "/history",
-        element: <ChallengesHistoryPage/>
+        element: <ChallengeHistoryPage/>
       },
       {
         path: "/playground",
