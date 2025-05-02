@@ -1,5 +1,6 @@
 import "./playground.css";
 import * as monaco from "monaco-editor";
+import MonacoEditor from "../components/monacoEditor";
 
 import { useEffect, useState, useRef } from "react";
 
@@ -17,19 +18,6 @@ hello();`);
   //   useEffect(() => {
   //     console.log(codingLanguage);
   //   }, [codingLanguage]);
-
-  //create code editor once on render
-  useEffect(() => {
-    if (editorRef.current) return;
-    editorRef.current = monaco.editor.create(
-      document.getElementById("playground_code_container"),
-      {
-        value,
-        language: codingLanguage,
-        automaticLayout: true,
-      }
-    );
-  }, []);
 
   //handle coding language change
   useEffect(() => {
@@ -57,7 +45,9 @@ hello();`);
           <option value="python">Python</option>
         </select>
         <br />
-        <div id="playground_code_container"></div>
+        <div id="playground_code_container">
+          <MonacoEditor language={codingLanguage} />
+        </div>
         <div className="playground_prompt">
           <br />
           <label>What is your question</label>

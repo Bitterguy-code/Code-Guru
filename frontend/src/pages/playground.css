@@ -18,8 +18,7 @@
 #playground_code_container {
   height: 60vh;
   width: 100%;
-  border: 1px solid black;
-  background: greenyellow;
+  border: 1px solid green;
 }
 
 .playground_right_container {

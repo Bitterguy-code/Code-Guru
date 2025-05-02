@@ -1,0 +1,41 @@
+.home_container {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  background-image: url("../assets/homeBackground.png");
+  background-size: cover;
+  background-position: center 60%;
+}
+
+.home_left_container {
+  margin-top: 5%;
+  margin-left: 5%;
+  width: 35%;
+  height: 50%;
+  background: #030d10;
+  text-align: center;
+}
+
+.light_green {
+  color: #486f2e;
+  font-size: 2.5vw;
+}
+
+.dark_green {
+  color: #143d23;
+  font-size: 2.5vw;
+}
+.home_left_container h1 {
+  padding: 6px;
+}
+
+/* optional green box for home page if want to put more details */
+/* .home_right_container {
+  background-color: #486f2e;
+  margin-top: 5%;
+  margin-left: 25%;
+  width: 35%;
+  height: 50%;
+  border: 1px solid #143d23;
+  border-radius: 5px;
+} */

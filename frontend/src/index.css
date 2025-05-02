@@ -6,7 +6,7 @@
 
 /* Offset navbar */
 #root {
-  margin-top: calc(5vw + 2px);
+  margin-top: 5vw;
 }
 
 body {
