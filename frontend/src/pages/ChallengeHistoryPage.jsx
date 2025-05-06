@@ -44,7 +44,13 @@ export default function ChallengeHistoryPage() {
     icon: challenges[i] ? icon.normal : icon.hidden,
     challenge: challenges[i] || null,
   }));
-
+  const handleClick = (challenge) => {
+    challenge
+      ? alert("Go to next page")
+      : alert(
+          "Weapon not unlocked. Do more daily challenges to unlock this weapon."
+        );
+  };
   return (
     <div className="history_container">
       <div className="history_weapons">
@@ -53,6 +59,7 @@ export default function ChallengeHistoryPage() {
             src={icon}
             id={`weapon${i + 1}`}
             alt={challenge ? "Weapon" : "Hidden weapon"}
+
             // add href to link to challenges page
             // add hover to see title of weapon/challenge or "weapon not unlocked" for absence of challenge
           />
