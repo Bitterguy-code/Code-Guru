@@ -12,9 +12,9 @@
 }
 
 #weapon1 {
-  width: 150px;
-  left: 29.5vw;
-  top: 26vh;
+  width: 250px;
+  left: 83vw;
+  top: 20vh;
 }
 
 #weapon2 {
@@ -65,7 +65,7 @@
   top: 64vh;
 }
 #weapon10 {
-    width: 250px;
-    left: 83vw;
-    top: 20vh;
-  }
+  width: 150px;
+  left: 29.5vw;
+  top: 26vh;
+}
