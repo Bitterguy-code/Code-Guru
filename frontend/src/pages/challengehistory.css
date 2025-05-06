@@ -1,0 +1,71 @@
+.history_container {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  background-image: url("../challengeAssets/dojoInside.png");
+  background-size: cover;
+  background-position: center 60%;
+}
+
+.history_weapons img {
+  position: absolute;
+}
+
+#weapon1 {
+  width: 250px;
+  left: 83vw;
+  top: 20vh;
+}
+
+#weapon2 {
+  width: 450px;
+  left: 1vw;
+  top: 42vh;
+}
+
+#weapon3 {
+  width: 300px;
+  left: 20vw;
+  top: -2.5vh;
+}
+
+#weapon4 {
+  width: 200px;
+  left: 29.5vw;
+  top: 40vh;
+}
+
+#weapon5 {
+  width: 300px;
+  left: 39vw;
+  top: 20vh;
+}
+
+#weapon6 {
+  width: 200px;
+  left: 48vw;
+  top: 25vh;
+}
+
+#weapon7 {
+  width: 200px;
+  left: 56vw;
+  top: 38vh;
+}
+
+#weapon8 {
+  width: 350px;
+  left: 55vw;
+  top: 1.5vh;
+}
+
+#weapon9 {
+  width: 250px;
+  left: 67vw;
+  top: 64vh;
+}
+#weapon10 {
+  width: 150px;
+  left: 29.5vw;
+  top: 26vh;
+}
