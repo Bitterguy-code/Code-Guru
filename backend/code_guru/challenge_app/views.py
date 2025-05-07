@@ -30,11 +30,11 @@ class DailyChallenge(APIView):
     return clean_HTML
   
   def REFORMATED_AI_JSX(AI_response):
-     start_string = AI_response.find("html_string = ")
-     end_string = AI_response.rfind("</>")
-     print(start_string,end_string)
-     ready_JSX = AI_response[start_string+20:end_string]
-     return ready_JSX
+    start_string = AI_response.find("html_string = ")
+    end_string = AI_response.rfind("</>")
+    print(start_string,end_string)
+    ready_JSX = AI_response[start_string+20:end_string]
+    return ready_JSX
 
   def AI_HTML_TO_JSX(ruff_html):
      AIcontent = f"""
@@ -198,19 +198,18 @@ class DailyChallenge(APIView):
      return response.choices[0].message.content 
 
   def leetcode_API():
-      url = "https://alfa-leetcode-api.onrender.com/daily"
-      response = requests.get(url)
-      if response.status_code == 200:
-        return response.json()
-      else: 
-        return Response("'alfa-leetcode-api.onrender.com' is messing up", status=HTTP_404_NOT_FOUND)
+    url = "https://alfa-leetcode-api.onrender.com/daily"
+    response = requests.get(url)
+    if response.status_code == 200:
+      return response.json()
+    else: 
+      return Response("'alfa-leetcode-api.onrender.com' is messing up", status=HTTP_404_NOT_FOUND)
 
   def chatGPT():
     response = openai_client.responses.create(
-        model="gpt-4.1",
-        input="""\n  <p className=\"text-base sm:text-lg mb-4 break-words\">\n    Given a <strong className=\"font-semibold\">zero-based permutation</strong> <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums</code> (<strong className=\"font-semibold\">0-indexed</strong>), build an array <code className=\"bg-gray-100 px-1 py-0.5 rounded\">ans</code> of the <strong className=\"font-semibold\">same length</strong> where <code className=\"bg-gray-100 px-1 py-0.5 rounded\">ans[i] = nums[nums[i]]</code> for each <code className=\"bg-gray-100 px-1 py-0.5 rounded\">0 &lt;= i &lt; nums.length</code> and return it.\n  </p>\n\n  <p className=\"text-base sm:text-lg mb-4 break-words\">\n    A <strong className=\"font-semibold\">zero-based permutation</strong> <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums</code> is an array of <strong className=\"font-semibold\">distinct</strong> integers from <code className=\"bg-gray-100 px-1 py-0.5 rounded\">0</code> to <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums.length - 1</code> (<strong className=\"font-semibold\">inclusive</strong>).\n  </p>\n\n  <div className=\"mb-6\">\n    <h2 className=\"text-lg font-bold text-indigo-700 mb-2\">\n      <strong className=\"block\">Example 1:</strong>\n    </h2>\n    <pre className=\"bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto text-sm break-words\">\n      <strong className=\"block\">Input:</strong> nums = [0,2,1,5,3,4]\n      <strong className=\"block\">Output:</strong> [0,1,2,4,5,3]\n      <strong className=\"block\">Explanation:</strong> The array ans is built as follows: \n      ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]\n          = [nums[0], nums[2], nums[1], nums[5], nums[3], nums[4]]\n          = [0,1,2,4,5,3]\n    </pre>\n  </div>\n\n  <div className=\"mb-6\">\n    <h2 className=\"text-lg font-bold text-indigo-700 mb-2\">\n      <strong className=\"block\">Example 2:</strong>\n    </h2>\n    <pre className=\"bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto text-sm break-words\">\n      <strong className=\"block\">Input:</strong> nums = [5,0,1,2,3,4]\n      <strong className=\"block\">Output:</strong> [4,5,0,1,2,3]\n      <strong className=\"block\">Explanation:</strong> The array ans is built as follows:\n      ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]\n          = [nums[5], nums[0], nums[1], nums[2], nums[3], nums[4]]\n          = [4,5,0,1,2,3]\n    </pre>\n  </div>\n\n  <div>\n    <h2 className=\"text-lg font-bold text-indigo-700 mb-2\">\n      <strong className=\"block\">Constraints:</strong>\n    </h2>\n    <ul className=\"list-disc pl-5 space-y-1 text-sm sm:text-base break-words\">\n      <li>\n        <code className=\"bg-gray-100 px-1 py-0.5 rounded block\">\n          1 &lt;= nums.length &lt;= 1000\n        </code>\n      </li>\n      <li>\n        <code className=\"bg-gray-100 px-1 py-0.5 rounded block\">\n          0 &lt;= nums[i] &lt; nums.length\n        </code>\n      </li>\n      <li>\n        <code className=\"bg-gray-100 px-1 py-0.5 rounded block\">\n          The elements in <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums</code> are <strong className=\"font-semibold\">distinct</strong>.\n        </code>\n      </li>\n    </ul>\n  </div>\n\n  <p className=\"text-base sm:text-lg mt-6 break-words\">\n    <strong className=\"font-semibold\">Follow-up:</strong> Can you solve it without using an extra space (i.e., <code className=\"bg-gray-100 px-1 py-0.5 rounded\">O(1)</code> memory)?\n  </p>\n"
-
-Take this leetcode example and return me an example variable named "input" with ### at the end and a variable name "output" with @@@ at the end   in javascrit and Python"""
+      model="gpt-4.1",
+      input="""\n  <p className=\"text-base sm:text-lg mb-4 break-words\">\n    Given a <strong className=\"font-semibold\">zero-based permutation</strong> <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums</code> (<strong className=\"font-semibold\">0-indexed</strong>), build an array <code className=\"bg-gray-100 px-1 py-0.5 rounded\">ans</code> of the <strong className=\"font-semibold\">same length</strong> where <code className=\"bg-gray-100 px-1 py-0.5 rounded\">ans[i] = nums[nums[i]]</code> for each <code className=\"bg-gray-100 px-1 py-0.5 rounded\">0 &lt;= i &lt; nums.length</code> and return it.\n  </p>\n\n  <p className=\"text-base sm:text-lg mb-4 break-words\">\n    A <strong className=\"font-semibold\">zero-based permutation</strong> <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums</code> is an array of <strong className=\"font-semibold\">distinct</strong> integers from <code className=\"bg-gray-100 px-1 py-0.5 rounded\">0</code> to <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums.length - 1</code> (<strong className=\"font-semibold\">inclusive</strong>).\n  </p>\n\n  <div className=\"mb-6\">\n    <h2 className=\"text-lg font-bold text-indigo-700 mb-2\">\n      <strong className=\"block\">Example 1:</strong>\n    </h2>\n    <pre className=\"bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto text-sm break-words\">\n      <strong className=\"block\">Input:</strong> nums = [0,2,1,5,3,4]\n      <strong className=\"block\">Output:</strong> [0,1,2,4,5,3]\n      <strong className=\"block\">Explanation:</strong> The array ans is built as follows: \n      ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]\n          = [nums[0], nums[2], nums[1], nums[5], nums[3], nums[4]]\n          = [0,1,2,4,5,3]\n    </pre>\n  </div>\n\n  <div className=\"mb-6\">\n    <h2 className=\"text-lg font-bold text-indigo-700 mb-2\">\n      <strong className=\"block\">Example 2:</strong>\n    </h2>\n    <pre className=\"bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto text-sm break-words\">\n      <strong className=\"block\">Input:</strong> nums = [5,0,1,2,3,4]\n      <strong className=\"block\">Output:</strong> [4,5,0,1,2,3]\n      <strong className=\"block\">Explanation:</strong> The array ans is built as follows:\n      ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]\n          = [nums[5], nums[0], nums[1], nums[2], nums[3], nums[4]]\n          = [4,5,0,1,2,3]\n    </pre>\n  </div>\n\n  <div>\n    <h2 className=\"text-lg font-bold text-indigo-700 mb-2\">\n      <strong className=\"block\">Constraints:</strong>\n    </h2>\n    <ul className=\"list-disc pl-5 space-y-1 text-sm sm:text-base break-words\">\n      <li>\n        <code className=\"bg-gray-100 px-1 py-0.5 rounded block\">\n          1 &lt;= nums.length &lt;= 1000\n        </code>\n      </li>\n      <li>\n        <code className=\"bg-gray-100 px-1 py-0.5 rounded block\">\n          0 &lt;= nums[i] &lt; nums.length\n        </code>\n      </li>\n      <li>\n        <code className=\"bg-gray-100 px-1 py-0.5 rounded block\">\n          The elements in <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums</code> are <strong className=\"font-semibold\">distinct</strong>.\n        </code>\n      </li>\n    </ul>\n  </div>\n\n  <p className=\"text-base sm:text-lg mt-6 break-words\">\n    <strong className=\"font-semibold\">Follow-up:</strong> Can you solve it without using an extra space (i.e., <code className=\"bg-gray-100 px-1 py-0.5 rounded\">O(1)</code> memory)?\n  </p>\n"
+        Take this leetcode example and return me an example variable named "input" with ### at the end and a variable name "output" with @@@ at the end   in javascrit and Python"""
     )
     print(response.output_text)
 
@@ -228,6 +227,7 @@ Take this leetcode example and return me an example variable named "input" with 
         ready_HTML = DailyChallenge.IDK_unencoded_HTML(data["question"])
         big_AI_response = DailyChallenge.AI_HTML_TO_JSX(ready_HTML)
         ready_JSX = DailyChallenge.REFORMATED_AI_JSX(big_AI_response)
+        
 
         dailyDataFormatted = {
           "date": data["date"],
