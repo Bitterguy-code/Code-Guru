@@ -34,6 +34,7 @@ export default function ChallengeDailyPage() {
     console.log(editorCode);
     setAPIAnswer();
   }, [editorCode]);
+  
 
   return (
     <>

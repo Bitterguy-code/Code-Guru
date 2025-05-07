@@ -26,9 +26,14 @@ class Answer(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='answer')
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, related_name='answer')
     code = models.TextField(null= True)
+    solve = models.BooleanField(default=False)
 
     def setCode(self,code):
         self.code = code
+        self.save()
+    
+    def setSolve(self):
+        self.solve = not self.solve
         self.save()
     
     def __str__(self):

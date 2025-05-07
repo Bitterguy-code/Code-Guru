@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Challenge, Answer
-from .serializers import ChallengeSerializer
+from .serializers import ChallengeSerializer, AnswerSerializer
 import requests
 from user_app.views import TokenReq
 from rest_framework.status import (
@@ -205,47 +205,69 @@ class DailyChallenge(APIView):
     else: 
       return Response("'alfa-leetcode-api.onrender.com' is messing up", status=HTTP_404_NOT_FOUND)
 
-  def chatGPT():
+  def chatGPT(jsx):
     response = openai_client.responses.create(
       model="gpt-4.1",
-      input="""\n  <p className=\"text-base sm:text-lg mb-4 break-words\">\n    Given a <strong className=\"font-semibold\">zero-based permutation</strong> <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums</code> (<strong className=\"font-semibold\">0-indexed</strong>), build an array <code className=\"bg-gray-100 px-1 py-0.5 rounded\">ans</code> of the <strong className=\"font-semibold\">same length</strong> where <code className=\"bg-gray-100 px-1 py-0.5 rounded\">ans[i] = nums[nums[i]]</code> for each <code className=\"bg-gray-100 px-1 py-0.5 rounded\">0 &lt;= i &lt; nums.length</code> and return it.\n  </p>\n\n  <p className=\"text-base sm:text-lg mb-4 break-words\">\n    A <strong className=\"font-semibold\">zero-based permutation</strong> <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums</code> is an array of <strong className=\"font-semibold\">distinct</strong> integers from <code className=\"bg-gray-100 px-1 py-0.5 rounded\">0</code> to <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums.length - 1</code> (<strong className=\"font-semibold\">inclusive</strong>).\n  </p>\n\n  <div className=\"mb-6\">\n    <h2 className=\"text-lg font-bold text-indigo-700 mb-2\">\n      <strong className=\"block\">Example 1:</strong>\n    </h2>\n    <pre className=\"bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto text-sm break-words\">\n      <strong className=\"block\">Input:</strong> nums = [0,2,1,5,3,4]\n      <strong className=\"block\">Output:</strong> [0,1,2,4,5,3]\n      <strong className=\"block\">Explanation:</strong> The array ans is built as follows: \n      ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]\n          = [nums[0], nums[2], nums[1], nums[5], nums[3], nums[4]]\n          = [0,1,2,4,5,3]\n    </pre>\n  </div>\n\n  <div className=\"mb-6\">\n    <h2 className=\"text-lg font-bold text-indigo-700 mb-2\">\n      <strong className=\"block\">Example 2:</strong>\n    </h2>\n    <pre className=\"bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto text-sm break-words\">\n      <strong className=\"block\">Input:</strong> nums = [5,0,1,2,3,4]\n      <strong className=\"block\">Output:</strong> [4,5,0,1,2,3]\n      <strong className=\"block\">Explanation:</strong> The array ans is built as follows:\n      ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]\n          = [nums[5], nums[0], nums[1], nums[2], nums[3], nums[4]]\n          = [4,5,0,1,2,3]\n    </pre>\n  </div>\n\n  <div>\n    <h2 className=\"text-lg font-bold text-indigo-700 mb-2\">\n      <strong className=\"block\">Constraints:</strong>\n    </h2>\n    <ul className=\"list-disc pl-5 space-y-1 text-sm sm:text-base break-words\">\n      <li>\n        <code className=\"bg-gray-100 px-1 py-0.5 rounded block\">\n          1 &lt;= nums.length &lt;= 1000\n        </code>\n      </li>\n      <li>\n        <code className=\"bg-gray-100 px-1 py-0.5 rounded block\">\n          0 &lt;= nums[i] &lt; nums.length\n        </code>\n      </li>\n      <li>\n        <code className=\"bg-gray-100 px-1 py-0.5 rounded block\">\n          The elements in <code className=\"bg-gray-100 px-1 py-0.5 rounded\">nums</code> are <strong className=\"font-semibold\">distinct</strong>.\n        </code>\n      </li>\n    </ul>\n  </div>\n\n  <p className=\"text-base sm:text-lg mt-6 break-words\">\n    <strong className=\"font-semibold\">Follow-up:</strong> Can you solve it without using an extra space (i.e., <code className=\"bg-gray-100 px-1 py-0.5 rounded\">O(1)</code> memory)?\n  </p>\n"
-        Take this leetcode example and return me an example variable named "input" with ### at the end and a variable name "output" with @@@ at the end   in javascrit and Python"""
-    )
+      input= f"""
+      {jsx}
+      Take this leetcode example and return me an example like in this format below even if the code does not make sense.
+
+      one example in javascipt:
+      @let input = "example"$
+      @let output = "example"$
+      or
+      @let input = "moveTime = [[0,4],[4,4]]"$
+      @let output = "6"$
+
+
+      one example in python:
+      ~input = "example"&
+      ~output = "example"&
+      or
+      ~input = "moveTime = [[0,4],[4,4]]"&
+      ~output = "6"&
+      """ 
+      )
     print(response.output_text)
+  
+  def REFORMATED_input_and_output():
+    pass
 
 
 
 
 
   def get(self,request,date):
-      # testDate = '2025-04-30'
-      result = Challenge.objects.filter(date__date= date)
-      resultSer = ChallengeSerializer(result, many=True)
+    # testDate = '2025-04-30'
+    result = Challenge.objects.filter(date__date= date)
+    resultSer = ChallengeSerializer(result, many=True)
 
-      if len(resultSer.data) == 0:
-        data = DailyChallenge.leetcode_API()
-        ready_HTML = DailyChallenge.IDK_unencoded_HTML(data["question"])
-        big_AI_response = DailyChallenge.AI_HTML_TO_JSX(ready_HTML)
-        ready_JSX = DailyChallenge.REFORMATED_AI_JSX(big_AI_response)
-        
+    if len(resultSer.data) == 0:
+      data = DailyChallenge.leetcode_API()
+      ready_HTML = DailyChallenge.IDK_unencoded_HTML(data["question"])
+      big_AI_response = DailyChallenge.AI_HTML_TO_JSX(ready_HTML)
+      ready_JSX = DailyChallenge.REFORMATED_AI_JSX(big_AI_response)
+      input_and_output_string = DailyChallenge.chatGPT(ready_JSX)
+      input, output = DailyChallenge.REFORMATED_input_and_output(input_and_output_string)
 
-        dailyDataFormatted = {
-          "date": data["date"],
-          "questionLink": data["questionLink"],
-          "questionTitle": data["questionTitle"],
-          "difficulty": data["difficulty"],
-          "question": data["question"],
-          "hints": data["hints"],
-          "html": ready_JSX,
-        }
 
-        newChallenge = Challenge.objects.create(**dailyDataFormatted)
-        return Response(newChallenge)
-      else:
-        # ready_JSX = DailyChallenge.AI_HTML_TO_JSX(resultSer.data[0]["question"])
-        # result[0].setHTML(ready_JSX)
-        DailyChallenge.chatGPT()
-        return Response(resultSer.data[0])
+      dailyDataFormatted = {
+        "date": data["date"],
+        "questionLink": data["questionLink"],
+        "questionTitle": data["questionTitle"],
+        "difficulty": data["difficulty"],
+        "question": data["question"],
+        "hints": data["hints"],
+        "html": ready_JSX,
+      }
+
+      newChallenge = Challenge.objects.create(**dailyDataFormatted)
+      return Response(newChallenge)
+    else:
+      # ready_JSX = DailyChallenge.AI_HTML_TO_JSX(resultSer.data[0]["question"])
+      # result[0].setHTML(ready_JSX)
+      DailyChallenge.chatGPT(resultSer.data[0]["html"])
+      return Response(resultSer.data[0])
   
 
 
@@ -253,6 +275,14 @@ class DailyChallenge(APIView):
 
 
 class DailyAnswer(TokenReq):
+  def get(self,request):
+    the_account = request.auth.user.account
+    all_answer = Answer.objects.filter(solve=False)
+    # print(all_answer)
+    all_answer_Ser = AnswerSerializer(all_answer, many=True)
+    # print(all_answer_Ser.data)
+    return Response(all_answer_Ser.data)
+
   def post(self,request):
     the_account = request.auth.user.account
     challenge_id = request.data["challengeID"]
