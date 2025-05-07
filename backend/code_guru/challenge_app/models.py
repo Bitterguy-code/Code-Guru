@@ -1,5 +1,6 @@
 from django.db import models
 from account_app.models import Account
+from django.contrib.postgres.fields import ArrayField
 
 
 class Challenge(models.Model):
@@ -10,6 +11,8 @@ class Challenge(models.Model):
     question = models.CharField(null=True)
     hints = models.CharField(null=True)
     html = models.TextField(null=True)
+    input  = models.CharField(null=True)
+    output  = models.CharField(null=True)
 
     def __str__(self):
         return f"Challenge({self.date})"

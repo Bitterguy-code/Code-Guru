@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import MonacoEditor from "../components/monacoEditor";
 import Button from "react-bootstrap/Button";
+import parse from 'html-react-parser';
+
 import {
   getAPIDailyChallengeData,
   putAPIDailyChallengeAnswer,
 } from "../utilities";
 import ChallengeDisplay from "../components/challengeDisplay";
-import parse from 'html-react-parser';
-
 
 export default function ChallengeDailyPage() {
   const [dailyChallengeData, setDailyChallengeData] = useState();
@@ -41,13 +41,15 @@ export default function ChallengeDailyPage() {
         {/* this holds 2 columns */}
         <section className="w-1/2 p-3  overflow-auto">
           {dailyChallengeData ? (
-            <ChallengeDisplay data={dailyChallengeData} />
+            // <ChallengeDisplay data={dailyChallengeData} htmlData={dailyChallengeData.html} />
+            parse(dailyChallengeData.html)
           ) : null}
+
         </section>
 
+        
         <section className="w-1/2 p-3">
           <div className="mx-auto h-3/4 bg-white rounded-xl shadow-md">
-
             <div>
               <label>Choose a language:</label>
               <select
@@ -58,7 +60,6 @@ export default function ChallengeDailyPage() {
                 <option value="javascript">JavaScript</option>
                 <option value="python">Python</option>
               </select>
-
             </div>
             <MonacoEditor
               language={editorLanguage}
@@ -66,8 +67,6 @@ export default function ChallengeDailyPage() {
               setEditorCode={setEditorCode}
             />
           </div>
-
-
 
           <div className="mx-auto h-1/4 p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
             <div className="flex flex-col gap-1">
