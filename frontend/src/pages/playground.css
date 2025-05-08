@@ -1,7 +1,7 @@
 .playground_container {
   display: flex;
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
 }
 .playground_left_container {
   display: flex;
@@ -10,6 +10,12 @@
   height: 84vh;
   flex-direction: column;
 }
+
+.playground_left_container option,
+.playground_left_container select {
+  border: 1px solid black;
+}
+
 #coding_language {
   height: 1.5vw;
   width: 10vw;
@@ -30,11 +36,19 @@
 .playground_correction {
   border: 1px black solid;
   border-radius: 5px;
-  width:100%;
-  padding:10px;
+  width: 100%;
+  padding: 10px;
 }
 
 #playground_prompt_input {
   width: 99.5%;
   resize: none;
+  border: 1px solid black;
+}
+
+.playground_prompt button {
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: lightgray;
+  padding: 5px;
 }
