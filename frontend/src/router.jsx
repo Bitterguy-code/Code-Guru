@@ -11,7 +11,6 @@ import LogInPage from "./pages/LogInPage.jsx";
 import { userConfirmation } from "./utilities.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,28 +22,44 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/challenge",
-        element: <ChallengeDailyPage/>
-      },
-      {
-        path: "/history",
-        element: <ChallengeHistoryPage/>
-      },
-      {
-        path: "/playground",
-        element: <PlaygroundPage />,
-      },
-      {
-        path: "/newsletter",
-        element: <NewsletterPage />,
-      },
-      {
         path: "/signup",
-        element: <SignUpPage/>,
+        element: <SignUpPage />,
       },
       {
         path: "/login",
         element: <LogInPage />,
+      },
+      {
+        path: "/challenge",
+        element: (
+          <PrivateRoute>
+            <ChallengeDailyPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/history",
+        element: (
+          <PrivateRoute>
+            <ChallengeHistoryPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/playground",
+        element: (
+          <PrivateRoute>
+            <PlaygroundPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/newsletter",
+        element: (
+          <PrivateRoute>
+            <NewsletterPage />
+          </PrivateRoute>
+        ),
       },
     ],
   },
