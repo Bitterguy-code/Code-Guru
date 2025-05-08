@@ -1,31 +1,88 @@
 import axios, { Axios } from "axios";
 
 export const api = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/v1/"
-})
+  baseURL: "http://127.0.0.1:8000/api/v1/",
+});
 
-export async function userSignUp (){
-    let response = await api.post("",{});
-
-    return null
+export const userConfirmation = async () => {
+  let token = localStorage.getItem("token");
+  if (token) {
+    api.defaults.headers.common["Authorization"] = `Token ${token}`;
+    let response = await api.get("user/info/");
+    if (response.status === 200) {
+      return response.data.user;
     }
+  }
+  return null;
+};
 
-export async function userLogIn (){
-    let response = await api.post("",{});
+export async function userSignUp(username, email, password) {
+  try {
+    let response = await api.post("user/signup/", {
+      username: username,
+      email: email,
+      password: password,
+    });
 
-    return null
+    if (response.status === 201) {
+      let { username, token } = response.data;
+      localStorage.setItem("token", token);
+      api.defaults.headers.common["Authorization"] = `Token ${token}`;
+      return username;
+    } else {
+      alert("Sign up unsuccessful");
+      return null;
     }
-
-export function getDate(){
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    return formattedDate
+  } catch (error) {
+    if (error.response && error.response.data) {
+      alert(error.response.data);
+      return null;
+    }
+  }
 }
 
+export async function userLogIn(username, password) {
+  try {
+    let response = await api.post("user/login/", {
+      username: username,
+      password: password,
+    });
+    if (response.status === 200) {
+      let { username, token } = response.data;
+      localStorage.setItem("token", token);
+      api.defaults.headers.common["Authorization"] = `Token ${token}`;
+      return username;
+    } else {
+      alert(response.data);
+      return null;
+    }
+  } catch (error) {
+    if (error.response && error.response.data) {
+      alert(error.response.data);
+      return null;
+    }
+  }
+}
 
+export const userLogOut = async () => {
+  let response = await api.delete("user/logout/");
+  if (response.status === 204) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    delete api.defaults.headers.common["Authorization"];
+    return null;
+  }
+  alert("Something went wrong and logout failed");
+};
+
+export function getDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate;
+}
 
 export async function getAPIDailyChallengeData(){
     const currentDate = getDate()
@@ -53,5 +110,4 @@ export async function putAPIDailyChallengeAnswer(challengeID, answerCode, answer
     // }
     console.log(response.data)
     return response.data
-
 }
