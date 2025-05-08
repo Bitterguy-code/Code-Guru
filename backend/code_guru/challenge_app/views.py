@@ -23,26 +23,26 @@ openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 
 class DailyChallenge(APIView):
+  def API_leetcode():
+      url = "https://alfa-leetcode-api.onrender.com/daily"
+      response = requests.get(url)
+      if response.status_code == 200:
+        return response.json()
+      else: 
+        return Response("'alfa-leetcode-api.onrender.com' is messing up", status=HTTP_404_NOT_FOUND)
 
-  def IDK_unencoded_HTML(encoded_HTML):
+  def REFORMATED_unencoded_HTML(encoded_HTML):
     result = encoded_HTML.encode().decode('unicode_escape')
     clean_HTML = html.unescape(result)
     return clean_HTML
   
-  def REFORMATED_AI_JSX(AI_response):
-    start_string = AI_response.find("html_string = ")
-    end_string = AI_response.rfind("</>")
-    print(start_string,end_string)
-    ready_JSX = AI_response[start_string+20:end_string]
-    return ready_JSX
-
-  def AI_HTML_TO_JSX(ruff_html):
+  def AI_HTML_TO_JSX(clean_HTML):
      AIcontent = f"""
           Clean and Render React Code with Tailwind
           Return me the first set of code as similar as possible to the second set of code. Clean it up so I can render on react properly so attention in trying have the tailwind similar as possible especially when it comes to the <pre/>. Sure it can render properly on react by correcting "<",">". Make sure to include proper spacing between words. But around the <pre> or "Explanation:" keep the spacing tight and get rid of and necessary /n.
 
           first code:
-          {ruff_html}
+          {clean_HTML}
           second code:
           <>
             <p className="text-base sm:text-lg mb-4 break-words">
@@ -193,19 +193,17 @@ class DailyChallenge(APIView):
       ],
      stream=False
       )
-    #  print(response.choices[0].message.content)
-    #  format_JSX = DailyChallenge.REFORMATED_AI_JSX(response.choices[0].message.content)
-     return response.choices[0].message.content 
+     return response.choices[0].message.content
 
-  def leetcode_API():
-    url = "https://alfa-leetcode-api.onrender.com/daily"
-    response = requests.get(url)
-    if response.status_code == 200:
-      return response.json()
-    else: 
-      return Response("'alfa-leetcode-api.onrender.com' is messing up", status=HTTP_404_NOT_FOUND)
+  def REFORMATED_AI_JSX(AI_response):
+    start_string = AI_response.find("html_string = ")
+    end_string = AI_response.rfind("</>")
+    print(start_string,end_string)
+    ready_JSX = AI_response[start_string+20:end_string]
+    return ready_JSX
 
-  def chatGPT(jsx):
+   
+  def AI_input_and_output(jsx):
     response = openai_client.responses.create(
       model="gpt-4.1",
       input= f"""
@@ -228,28 +226,39 @@ class DailyChallenge(APIView):
       ~output = "6"&
       """ 
       )
-    print(response.output_text)
+    return response.output_text
   
-  def REFORMATED_input_and_output():
-    pass
-
+  def REFORMATED_input_and_output(input_and_output_string):
+    # JavaScript format:
+    start_input = input_and_output_string.find("@let input = ")
+    end_input = input_and_output_string.find("$")
+    start_output = input_and_output_string.rfind("@let output = ")
+    end_output = input_and_output_string.rfind("$")
+    input_JavaScript = input_and_output_string[start_input+14:end_input-1]
+    output_JavaScript = input_and_output_string[start_output+15:end_output-1]
+    #Python
+    start_input = input_and_output_string.find("~input = ")
+    end_input = input_and_output_string.find("&")
+    start_output = input_and_output_string.rfind("~output = ")
+    end_output = input_and_output_string.rfind("&")
+    input_Python = input_and_output_string[start_input+10:end_input-1]
+    output_Python = input_and_output_string[start_output+11:end_output-1]
+    return input_JavaScript, output_JavaScript, input_Python, output_Python
 
 
 
 
   def get(self,request,date):
-    # testDate = '2025-04-30'
     result = Challenge.objects.filter(date__date= date)
     resultSer = ChallengeSerializer(result, many=True)
 
     if len(resultSer.data) == 0:
-      data = DailyChallenge.leetcode_API()
-      ready_HTML = DailyChallenge.IDK_unencoded_HTML(data["question"])
-      big_AI_response = DailyChallenge.AI_HTML_TO_JSX(ready_HTML)
-      ready_JSX = DailyChallenge.REFORMATED_AI_JSX(big_AI_response)
-      input_and_output_string = DailyChallenge.chatGPT(ready_JSX)
-      input, output = DailyChallenge.REFORMATED_input_and_output(input_and_output_string)
-
+      data = DailyChallenge.API_leetcode()
+      clean_HTML = DailyChallenge.REFORMATED_unencoded_HTML(data["question"])
+      response_AI = DailyChallenge.AI_HTML_TO_JSX(clean_HTML)
+      clean_JSX = DailyChallenge.REFORMATED_AI_JSX(response_AI)
+      input_and_output_string = DailyChallenge.AI_input_and_output(clean_JSX)
+      input_J, output_J, input_P, output_P = DailyChallenge.REFORMATED_input_and_output(input_and_output_string)
 
       dailyDataFormatted = {
         "date": data["date"],
@@ -258,15 +267,27 @@ class DailyChallenge(APIView):
         "difficulty": data["difficulty"],
         "question": data["question"],
         "hints": data["hints"],
-        "html": ready_JSX,
+        "html": clean_JSX,
+        "input_J": input_J,
+        "output_J": output_J,
+        "input_P": input_P,
+        "output_P": output_P,
       }
 
       newChallenge = Challenge.objects.create(**dailyDataFormatted)
       return Response(newChallenge)
     else:
+      # ALTER PAST CHALLENGE|HTML
       # ready_JSX = DailyChallenge.AI_HTML_TO_JSX(resultSer.data[0]["question"])
+      # response_AI = DailyChallenge.AI_HTML_TO_JSX(clean_HTML)
+      # clean_JSX = DailyChallenge.REFORMATED_AI_JSX(response_AI)
       # result[0].setHTML(ready_JSX)
-      DailyChallenge.chatGPT(resultSer.data[0]["html"])
+
+      # ALTER PAST CHALLENGE|INPUT,OUTPUT(J&P)
+      # input_and_output_string = DailyChallenge.AI_input_and_output(resultSer.data[0]["html"])
+      # input_J, output_J, input_P, output_P = DailyChallenge.REFORMATED_input_and_output(input_and_output_string)
+      # result[0].set_Input_And_Output(input_J, output_J, input_P, output_P)
+      # resultSer = ChallengeSerializer(result, many=True)
       return Response(resultSer.data[0])
   
 
@@ -275,180 +296,98 @@ class DailyChallenge(APIView):
 
 
 class DailyAnswer(TokenReq):
+
+  def AI_check_answer(challenge, code, language):
+    if language == "python":
+      input_Cha = challenge.input_P
+      output_Cha = challenge.output_P
+    elif language == "javascript":
+      input_Cha = challenge.input_J
+      output_Cha = challenge.output_J
+
+    response = openai_client.responses.create(
+      model="gpt-4.1",
+      input= f"""
+      Want you to take this leetcode “question” below with the following “input” and “expected output” 
+      in the specified coding “language” and check if the “user code response”  results in the “expected  output”.
+
+      If the “user code response” results in the “expected output”  return only the following:
+      @@@True@@@ $$$"the output of the user's code"$$$
+      like @@@True@@@ $$$10$$$
+
+      Else If the “user code response” does not results in the “expected output” return only the following:
+      @@@False@@@ $$$"the output of the user's code"$$$
+      like @@@False@@@ $$$10$$$
+
+  
+      question:
+      {challenge.html}
+      
+      input: {input_Cha}
+      expected output:{output_Cha}
+      language: {language}
+
+      user code response:
+      {code}
+      """ 
+    )
+    print(response.output_text)
+    return response.output_text
+
+
+  def REFORMAT_AI_answer(ai_result):
+    # print(ai_result,"&&&&")
+    start_solve = ai_result.find("@@@")
+    end_solve = ai_result.rfind("@@@")
+    start_result = ai_result.find("$$$")
+    end_result = ai_result.rfind("$$$")
+
+    solve = ai_result[start_solve+3:end_solve]
+    result = ai_result[start_result+3:end_result]
+    return solve, result
+
+
   def get(self,request):
     the_account = request.auth.user.account
-    all_answer = Answer.objects.filter(solve=False)
-    # print(all_answer)
+    all_answer = Answer.objects.filter(solve=True)
     all_answer_Ser = AnswerSerializer(all_answer, many=True)
-    # print(all_answer_Ser.data)
     return Response(all_answer_Ser.data)
 
-  def post(self,request):
-    the_account = request.auth.user.account
-    challenge_id = request.data["challengeID"]
-    the_challenge = Challenge.objects.get(id= challenge_id)
-    the_answer = Answer.objects.get(account= the_account, challenge= the_challenge)      
-    return Response({"answer": the_answer.code})
-  """
-  {"challengeID": 20}
-  """      
+  # def post(self,request):
+  #   the_account = request.auth.user.account
+  #   challenge_id = request.data["challengeID"]
+  #   the_challenge = Challenge.objects.get(id= challenge_id)
+  #   the_answer = Answer.objects.get(account= the_account, challenge= the_challenge)      
+  #   return Response({"answer": the_answer.code})
+  # """
+  # {"challengeID": 20}
+  # """      
 
 
   def put(self, request):
     the_account = request.auth.user.account
     challenge_id = request.data["challengeID"]
     answer_code = request.data["answerCode"]
+    print(answer_code)
+    answer_language = request.data["answerLanguage"]
     the_challenge = Challenge.objects.get(id= challenge_id)
+    ai_result = DailyAnswer.AI_check_answer(the_challenge, answer_code, answer_language)
+    solve, result = DailyAnswer.REFORMAT_AI_answer(ai_result)
+    # print("@@@@@@###")
+    # print(solve, result)
 
     the_answer, created = Answer.objects.get_or_create(account= the_account, challenge= the_challenge)
-    # print(the_account.answer.get(challenge = challenge_id))
-
     the_answer.setCode(answer_code)
-    print(the_answer.code)
-    # print(the_answer.code)
-    return Response(f"{the_answer} successfully Modified")    
-  """
-  {"challengeID": 20, "answerCode": "fgfgfgdffgfgffgdfggfdgfgd"}
+    the_answer.setLanguage(answer_language)
+    the_answer.setSolve(solve)
+    return Response({"message":f"{the_answer} successfully Created or Modified","solve": solve, "userCodeResult": result})    
+  """ input
+    {"challengeID": 28, "answerCode": "import heapq\n\ndef minimumTime(moveTime):\n    n, m = len(moveTime), len(moveTime[0])\n    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # Right, Down, Left, Up\n    visited = [[[float('inf')] * 2 for _ in range(m)] for _ in range(n)]\n    heap = [(0, 0, 0, 0)]  # (current_time, row, col, parity)\n\n    visited[0][0][0] = 0\n\n    while heap:\n        time, x, y, parity = heapq.heappop(heap)\n        if (x, y) == (n - 1, m - 1):\n            return time\n\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < n and 0 <= ny < m:\n                move_cost = 1 if parity == 0 else 2\n                arrival_time = max(time + move_cost, moveTime[nx][ny])\n                new_parity = 1 - parity\n                if visited[nx][ny][new_parity] > arrival_time:\n                    visited[nx][ny][new_parity] = arrival_time\n                    heapq.heappush(heap, (arrival_time, nx, ny, new_parity))\n\n# Example usage:\nmoveTime = [[0,1,2],[2,3,4],[5,6,7]]\nprint(minimumTime(moveTime))", "answerLanguage": "python"}
   """   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# https://alfa-leetcode-api.onrender.com/daily
-"""
-{
-  "questionLink": "https://leetcode.com/problems/find-numbers-with-even-number-of-digits/",
-  "date": "2025-04-30",
-  "questionId": "1421",
-  "questionFrontendId": "1295",
-  "questionTitle": "Find Numbers with Even Number of Digits",
-  "titleSlug": "find-numbers-with-even-number-of-digits",
-  "difficulty": "Easy",
-  "isPaidOnly": false,
-  "question": "\u003Cp\u003EGiven an array \u003Ccode\u003Enums\u003C/code\u003E of integers, return how many of them contain an \u003Cstrong\u003Eeven number\u003C/strong\u003E of digits.\u003C/p\u003E\n\n\u003Cp\u003E&nbsp;\u003C/p\u003E\n\u003Cp\u003E\u003Cstrong class=\"example\"\u003EExample 1:\u003C/strong\u003E\u003C/p\u003E\n\n\u003Cpre\u003E\n\u003Cstrong\u003EInput:\u003C/strong\u003E nums = [12,345,2,6,7896]\n\u003Cstrong\u003EOutput:\u003C/strong\u003E 2\n\u003Cstrong\u003EExplanation: \n\u003C/strong\u003E12 contains 2 digits (even number of digits).&nbsp;\n345 contains 3 digits (odd number of digits).&nbsp;\n2 contains 1 digit (odd number of digits).&nbsp;\n6 contains 1 digit (odd number of digits).&nbsp;\n7896 contains 4 digits (even number of digits).&nbsp;\nTherefore only 12 and 7896 contain an even number of digits.\n\u003C/pre\u003E\n\n\u003Cp\u003E\u003Cstrong class=\"example\"\u003EExample 2:\u003C/strong\u003E\u003C/p\u003E\n\n\u003Cpre\u003E\n\u003Cstrong\u003EInput:\u003C/strong\u003E nums = [555,901,482,1771]\n\u003Cstrong\u003EOutput:\u003C/strong\u003E 1 \n\u003Cstrong\u003EExplanation: \u003C/strong\u003E\nOnly 1771 contains an even number of digits.\n\u003C/pre\u003E\n\n\u003Cp\u003E&nbsp;\u003C/p\u003E\n\u003Cp\u003E\u003Cstrong\u003EConstraints:\u003C/strong\u003E\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003E\u003Ccode\u003E1 &lt;= nums.length &lt;= 500\u003C/code\u003E\u003C/li\u003E\n\t\u003Cli\u003E\u003Ccode\u003E1 &lt;= nums[i] &lt;= 10\u003Csup\u003E5\u003C/sup\u003E\u003C/code\u003E\u003C/li\u003E\n\u003C/ul\u003E\n",
-  "exampleTestcases": "[12,345,2,6,7896]\n[555,901,482,1771]",
-  "topicTags": [
-    {
-      "name": "Array",
-      "slug": "array",
-      "translatedName": null
-    },
-    {
-      "name": "Math",
-      "slug": "math",
-      "translatedName": null
-    }
-  ],
-  "hints": [
-    "How to compute the number of digits of a number ?",
-    "Divide the number by 10 again and again to get the number of digits."
-  ],
-  "solution": {
-    "id": "2048",
-    "canSeeDetail": true,
-    "paidOnly": false,
-    "hasVideoSolution": false,
-    "paidOnlyVideo": true
-  },
-  "companyTagStats": null,
-  "likes": 2538,
-  "dislikes": 130,
-  "similarQuestions": "[{\"title\": \"Finding 3-Digit Even Numbers\", \"titleSlug\": \"finding-3-digit-even-numbers\", \"difficulty\": \"Easy\", \"translatedTitle\": null}, {\"title\": \"Number of Even and Odd Bits\", \"titleSlug\": \"number-of-even-and-odd-bits\", \"difficulty\": \"Easy\", \"translatedTitle\": null}, {\"title\": \"Find if Digit Game Can Be Won\", \"titleSlug\": \"find-if-digit-game-can-be-won\", \"difficulty\": \"Easy\", \"translatedTitle\": null}]"
-}
-"""
-"""
-{
-  "questionLink": "https://leetcode.com/problems/push-dominoes/",
-  "date": "2025-05-02",
-  "questionId": "868",
-  "questionFrontendId": "838",
-  "questionTitle": "Push Dominoes",
-  "titleSlug": "push-dominoes",
-  "difficulty": "Medium",
-  "isPaidOnly": false,
-  "question": "\u003Cp\u003EThere are \u003Ccode\u003En\u003C/code\u003E dominoes in a line, and we place each domino vertically upright. In the beginning, we simultaneously push some of the dominoes either to the left or to the right.\u003C/p\u003E\n\n\u003Cp\u003EAfter each second, each domino that is falling to the left pushes the adjacent domino on the left. Similarly, the dominoes falling to the right push their adjacent dominoes standing on the right.\u003C/p\u003E\n\n\u003Cp\u003EWhen a vertical domino has dominoes falling on it from both sides, it stays still due to the balance of the forces.\u003C/p\u003E\n\n\u003Cp\u003EFor the purposes of this question, we will consider that a falling domino expends no additional force to a falling or already fallen domino.\u003C/p\u003E\n\n\u003Cp\u003EYou are given a string \u003Ccode\u003Edominoes\u003C/code\u003E representing the initial state where:\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003E\u003Ccode\u003Edominoes[i] = &#39;L&#39;\u003C/code\u003E, if the \u003Ccode\u003Ei\u003Csup\u003Eth\u003C/sup\u003E\u003C/code\u003E domino has been pushed to the left,\u003C/li\u003E\n\t\u003Cli\u003E\u003Ccode\u003Edominoes[i] = &#39;R&#39;\u003C/code\u003E, if the \u003Ccode\u003Ei\u003Csup\u003Eth\u003C/sup\u003E\u003C/code\u003E domino has been pushed to the right, and\u003C/li\u003E\n\t\u003Cli\u003E\u003Ccode\u003Edominoes[i] = &#39;.&#39;\u003C/code\u003E, if the \u003Ccode\u003Ei\u003Csup\u003Eth\u003C/sup\u003E\u003C/code\u003E domino has not been pushed.\u003C/li\u003E\n\u003C/ul\u003E\n\n\u003Cp\u003EReturn \u003Cem\u003Ea string representing the final state\u003C/em\u003E.\u003C/p\u003E\n\n\u003Cp\u003E&nbsp;\u003C/p\u003E\n\u003Cp\u003E\u003Cstrong class=\"example\"\u003EExample 1:\u003C/strong\u003E\u003C/p\u003E\n\n\u003Cpre\u003E\n\u003Cstrong\u003EInput:\u003C/strong\u003E dominoes = &quot;RR.L&quot;\n\u003Cstrong\u003EOutput:\u003C/strong\u003E &quot;RR.L&quot;\n\u003Cstrong\u003EExplanation:\u003C/strong\u003E The first domino expends no additional force on the second domino.\n\u003C/pre\u003E\n\n\u003Cp\u003E\u003Cstrong class=\"example\"\u003EExample 2:\u003C/strong\u003E\u003C/p\u003E\n\u003Cimg alt=\"\" src=\"https://s3-lc-upload.s3.amazonaws.com/uploads/2018/05/18/domino.png\" style=\"height: 196px; width: 512px;\" /\u003E\n\u003Cpre\u003E\n\u003Cstrong\u003EInput:\u003C/strong\u003E dominoes = &quot;.L.R...LR..L..&quot;\n\u003Cstrong\u003EOutput:\u003C/strong\u003E &quot;LL.RR.LLRRLL..&quot;\n\u003C/pre\u003E\n\n\u003Cp\u003E&nbsp;\u003C/p\u003E\n\u003Cp\u003E\u003Cstrong\u003EConstraints:\u003C/strong\u003E\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003E\u003Ccode\u003En == dominoes.length\u003C/code\u003E\u003C/li\u003E\n\t\u003Cli\u003E\u003Ccode\u003E1 &lt;= n &lt;= 10\u003Csup\u003E5\u003C/sup\u003E\u003C/code\u003E\u003C/li\u003E\n\t\u003Cli\u003E\u003Ccode\u003Edominoes[i]\u003C/code\u003E is either \u003Ccode\u003E&#39;L&#39;\u003C/code\u003E, \u003Ccode\u003E&#39;R&#39;\u003C/code\u003E, or \u003Ccode\u003E&#39;.&#39;\u003C/code\u003E.\u003C/li\u003E\n\u003C/ul\u003E\n",
-  "exampleTestcases": "\"RR.L\"\n\".L.R...LR..L..\"",
-  "topicTags": [
-    {
-      "name": "Two Pointers",
-      "slug": "two-pointers",
-      "translatedName": null
-    },
-    {
-      "name": "String",
-      "slug": "string",
-      "translatedName": null
-    },
-    {
-      "name": "Dynamic Programming",
-      "slug": "dynamic-programming",
-      "translatedName": null
-    }
-  ],
-  "hints": [],
-  "solution": {
-    "id": "470",
-    "canSeeDetail": true,
-    "paidOnly": false,
-    "hasVideoSolution": false,
-    "paidOnlyVideo": true
-  },
-  "companyTagStats": null,
-  "likes": 3793,
-  "dislikes": 259,
-  "similarQuestions": "[]"
-}
-"""
-# chatGPT
-# Give me a translation in a Json format
-# "question": "\u003Cp\u003EGiven an array \u003Ccode\u003Enums\u003C/code\u003E of integers, return how many of them contain an \u003Cstrong\u003Eeven number\u003C/strong\u003E of digits.\u003C/p\u003E\n\n\u003Cp\u003E&nbsp;\u003C/p\u003E\n\u003Cp\u003E\u003Cstrong class=\"example\"\u003EExample 1:\u003C/strong\u003E\u003C/p\u003E\n\n\u003Cpre\u003E\n\u003Cstrong\u003EInput:\u003C/strong\u003E nums = [12,345,2,6,7896]\n\u003Cstrong\u003EOutput:\u003C/strong\u003E 2\n\u003Cstrong\u003EExplanation: \n\u003C/strong\u003E12 contains 2 digits (even number of digits).&nbsp;\n345 contains 3 digits (odd number of digits).&nbsp;\n2 contains 1 digit (odd number of digits).&nbsp;\n6 contains 1 digit (odd number of digits).&nbsp;\n7896 contains 4 digits (even number of digits).&nbsp;\nTherefore only 12 and 7896 contain an even number of digits.\n\u003C/pre\u003E\n\n\u003Cp\u003E\u003Cstrong class=\"example\"\u003EExample 2:\u003C/strong\u003E\u003C/p\u003E\n\n\u003Cpre\u003E\n\u003Cstrong\u003EInput:\u003C/strong\u003E nums = [555,901,482,1771]\n\u003Cstrong\u003EOutput:\u003C/strong\u003E 1 \n\u003Cstrong\u003EExplanation: \u003C/strong\u003E\nOnly 1771 contains an even number of digits.\n\u003C/pre\u003E\n\n\u003Cp\u003E&nbsp;\u003C/p\u003E\n\u003Cp\u003E\u003Cstrong\u003EConstraints:\u003C/strong\u003E\u003C/p\u003E\n\n\u003Cul\u003E\n\t\u003Cli\u003E\u003Ccode\u003E1 &lt;= nums.length &lt;= 500\u003C/code\u003E\u003C/li\u003E\n\t\u003Cli\u003E\u003Ccode\u003E1 &lt;= nums[i] &lt;= 10\u003Csup\u003E5\u003C/sup\u003E\u003C/code\u003E\u003C/li\u003E\n\u003C/ul\u003E\n",
-"""
-{
-  "problem": "Count Numbers with Even Number of Digits",
-  "description": "Given a list of integers, return how many of them contain an even number of digits.",
-  "examples": [
-    {
-      "input": [12, 345, 2, 6, 7896],
-      "output": 2,
-      "explanation": [
-        "12 has 2 digits (even)",
-        "345 has 3 digits (odd)",
-        "2 has 1 digit (odd)",
-        "6 has 1 digit (odd)",
-        "7896 has 4 digits (even)"
-      ]
-    },
-    {
-      "input": [555, 901, 482, 1771],
-      "output": 1,
-      "explanation": [
-        "555 has 3 digits (odd)",
-        "901 has 3 digits (odd)",
-        "482 has 3 digits (odd)",
-        "1771 has 4 digits (even)"
-      ]
-    }
-  ],
-  "constraints": {
-    "nums.length": "1 <= nums.length <= 500",
-    "nums[i]": "1 <= nums[i] <= 100000"
+  """
+  {
+  "message": "(Answer of (kennywelcome' account) for Challenge(2025-05-08 00:00:00+00:00)) successfully Created or Modified",
+  "solve": "True",
+  "userCodeResult": "10"
   }
-}
-"""
+  """

@@ -3,6 +3,20 @@ import { vB20250501,vC20250501,vA20250502, vA20250504, vA20250505, vB20250505 } 
 
 export default function ChallengeDisplay({data, htmlData}){
 
+  function dateConvertor(){
+    const the_date = new Date(data.date)
+    const dateFormatted = the_date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC"
+    })
+    console.log(data.date, the_date)
+    return dateFormatted
+  }
+
+
+
     return(
       <>
         <section className="p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
@@ -14,7 +28,7 @@ export default function ChallengeDisplay({data, htmlData}){
             Difficulty: <span className="font-medium text-green-600">{data.difficulty}</span>
           </p>
           <p className="text-sm text-gray-600 mb-4">
-            Date: <time dateTime="2025-05-04T00:00:00Z">May 4, 2025</time>
+            {dateConvertor()}
           </p>
           <a
             href={data.questionLink}

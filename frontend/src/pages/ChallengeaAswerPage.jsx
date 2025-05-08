@@ -19,9 +19,7 @@ export default function ChallengeDailyPage() {
     setDailyChallengeData(data);
   }
   function setAPIAnswer() {
-    if (dailyChallengeData) {
       putAPIDailyChallengeAnswer(dailyChallengeData.id, editorCode);
-    }
   }
 
   useEffect(() => {
@@ -34,7 +32,7 @@ export default function ChallengeDailyPage() {
     console.log(editorCode);
     setAPIAnswer();
   }, [editorCode]);
-  
+
 
   return (
     <>
