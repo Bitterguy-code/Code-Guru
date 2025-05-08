@@ -13,24 +13,26 @@ export default function ChallengeDailyPage() {
   const [dailyChallengeData, setDailyChallengeData] = useState();
   const [editorLanguage, setEditorLanguage] = useState("javascript");
   const [editorCode, setEditorCode] = useState("// Start typing your code ..");
+  const [userCode, setUserCode] = useState()
 
   async function getData() {
     const data = await getAPIDailyChallengeData();
     setDailyChallengeData(data);
   }
-  function setAPIAnswer() {
-    if (dailyChallengeData) {
-      putAPIDailyChallengeAnswer(dailyChallengeData.id, editorCode);
-    }
+  async function setAPIAnswer() {
+    setUserCode({"userCodeResult": "loading..."})
+    const result = await putAPIDailyChallengeAnswer(dailyChallengeData.id, editorCode, editorLanguage);
+    setUserCode(result)
   }
+  "Need to set up a way to stop spam clicking, because every click creates ain't you API query"
 
   useEffect(() => {
     getData();
   }, []);
+
   useEffect(() => {
-    console.log(editorCode);
-    setAPIAnswer();
-  }, [editorCode]);
+    console.log(userCode);
+  }, [userCode]);
 
 
 
@@ -69,11 +71,11 @@ export default function ChallengeDailyPage() {
 
 
           <div className="mx-auto h-1/4 p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2 ">
               <div className="flex gap-4">
                 <p>Version: {editorLanguage}</p>
-                <Button>run</Button>
-                <Button>submit</Button>
+                <Button onClick={setAPIAnswer}>run & save</Button>
+                {/* <Button> submit</Button> */}
               </div>
               <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
                 <h1>Input: </h1>
@@ -99,7 +101,10 @@ export default function ChallengeDailyPage() {
               </div>
               <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
                 <h1>Output: </h1>
-                <h1>undefined</h1>
+                <h1>{userCode?
+                     userCode.userCodeResult:
+                     null}
+                </h1>
               </div>
             </div>
           </div>

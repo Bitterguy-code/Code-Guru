@@ -260,7 +260,6 @@ class DailyChallenge(APIView):
       input_and_output_string = DailyChallenge.AI_input_and_output(clean_JSX)
       input_J, output_J, input_P, output_P = DailyChallenge.REFORMATED_input_and_output(input_and_output_string)
 
-
       dailyDataFormatted = {
         "date": data["date"],
         "questionLink": data["questionLink"],
@@ -269,7 +268,10 @@ class DailyChallenge(APIView):
         "question": data["question"],
         "hints": data["hints"],
         "html": clean_JSX,
-
+        "input_J": input_J,
+        "output_J": output_J,
+        "input_P": input_P,
+        "output_P": output_P,
       }
 
       newChallenge = Challenge.objects.create(**dailyDataFormatted)
@@ -281,7 +283,7 @@ class DailyChallenge(APIView):
       # clean_JSX = DailyChallenge.REFORMATED_AI_JSX(response_AI)
       # result[0].setHTML(ready_JSX)
 
-      # ALTER PAST CHALLENGE|INPUT,OUTPUT
+      # ALTER PAST CHALLENGE|INPUT,OUTPUT(J&P)
       # input_and_output_string = DailyChallenge.AI_input_and_output(resultSer.data[0]["html"])
       # input_J, output_J, input_P, output_P = DailyChallenge.REFORMATED_input_and_output(input_and_output_string)
       # result[0].set_Input_And_Output(input_J, output_J, input_P, output_P)
@@ -294,39 +296,100 @@ class DailyChallenge(APIView):
 
 
 class DailyAnswer(TokenReq):
+
+  def AI_check_answer(challenge, code, language):
+    if language == "python":
+      input_Cha = challenge.input_P
+      output_Cha = challenge.output_P
+    elif language == "javascript":
+      input_Cha = challenge.input_J
+      output_Cha = challenge.output_J
+
+    response = openai_client.responses.create(
+      model="gpt-4.1",
+      input= f"""
+      Want you to take this leetcode “question” below with the following “input” and “expected output” 
+      in the specified coding “language” and check if the “user code response”  results in the “expected  output”.
+
+      If the “user code response” results in the “expected output”  return only the following:
+      @@@True@@@ $$$"the output of the user's code"$$$
+      like @@@True@@@ $$$10$$$
+
+      Else If the “user code response” does not results in the “expected output” return only the following:
+      @@@False@@@ $$$"the output of the user's code"$$$
+      like @@@False@@@ $$$10$$$
+
+  
+      question:
+      {challenge.html}
+      
+      input: {input_Cha}
+      expected output:{output_Cha}
+      language: {language}
+
+      user code response:
+      {code}
+      """ 
+    )
+    print(response.output_text)
+    return response.output_text
+
+
+  def REFORMAT_AI_answer(ai_result):
+    # print(ai_result,"&&&&")
+    start_solve = ai_result.find("@@@")
+    end_solve = ai_result.rfind("@@@")
+    start_result = ai_result.find("$$$")
+    end_result = ai_result.rfind("$$$")
+
+    solve = ai_result[start_solve+3:end_solve]
+    result = ai_result[start_result+3:end_result]
+    return solve, result
+
+
+    
+
   def get(self,request):
     the_account = request.auth.user.account
-    all_answer = Answer.objects.filter(solve=False)
-    # print(all_answer)
+    all_answer = Answer.objects.filter(solve=True)
     all_answer_Ser = AnswerSerializer(all_answer, many=True)
-    # print(all_answer_Ser.data)
     return Response(all_answer_Ser.data)
 
-  def post(self,request):
-    the_account = request.auth.user.account
-    challenge_id = request.data["challengeID"]
-    the_challenge = Challenge.objects.get(id= challenge_id)
-    the_answer = Answer.objects.get(account= the_account, challenge= the_challenge)      
-    return Response({"answer": the_answer.code})
-  """
-  {"challengeID": 20}
-  """      
+  # def post(self,request):
+  #   the_account = request.auth.user.account
+  #   challenge_id = request.data["challengeID"]
+  #   the_challenge = Challenge.objects.get(id= challenge_id)
+  #   the_answer = Answer.objects.get(account= the_account, challenge= the_challenge)      
+  #   return Response({"answer": the_answer.code})
+  # """
+  # {"challengeID": 20}
+  # """      
 
 
   def put(self, request):
     the_account = request.auth.user.account
     challenge_id = request.data["challengeID"]
     answer_code = request.data["answerCode"]
+    print(answer_code)
+    answer_language = request.data["answerLanguage"]
     the_challenge = Challenge.objects.get(id= challenge_id)
+    ai_result = DailyAnswer.AI_check_answer(the_challenge, answer_code, answer_language)
+    solve, result = DailyAnswer.REFORMAT_AI_answer(ai_result)
+    # print("@@@@@@###")
+    # print(solve, result)
 
     the_answer, created = Answer.objects.get_or_create(account= the_account, challenge= the_challenge)
-    # print(the_account.answer.get(challenge = challenge_id))
-
     the_answer.setCode(answer_code)
-    print(the_answer.code)
-    # print(the_answer.code)
-    return Response(f"{the_answer} successfully Modified")    
-  """
-  {"challengeID": 20, "answerCode": "fgfgfgdffgfgffgdfggfdgfgd"}
+    the_answer.setLanguage(answer_language)
+    the_answer.setSolve(solve)
+    return Response({"message":f"{the_answer} successfully Created or Modified","solve": solve, "userCodeResult": result})    
+  """ input
+    {"challengeID": 28, "answerCode": "import heapq\n\ndef minimumTime(moveTime):\n    n, m = len(moveTime), len(moveTime[0])\n    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # Right, Down, Left, Up\n    visited = [[[float('inf')] * 2 for _ in range(m)] for _ in range(n)]\n    heap = [(0, 0, 0, 0)]  # (current_time, row, col, parity)\n\n    visited[0][0][0] = 0\n\n    while heap:\n        time, x, y, parity = heapq.heappop(heap)\n        if (x, y) == (n - 1, m - 1):\n            return time\n\n        for dx, dy in directions:\n            nx, ny = x + dx, y + dy\n            if 0 <= nx < n and 0 <= ny < m:\n                move_cost = 1 if parity == 0 else 2\n                arrival_time = max(time + move_cost, moveTime[nx][ny])\n                new_parity = 1 - parity\n                if visited[nx][ny][new_parity] > arrival_time:\n                    visited[nx][ny][new_parity] = arrival_time\n                    heapq.heappush(heap, (arrival_time, nx, ny, new_parity))\n\n# Example usage:\nmoveTime = [[0,1,2],[2,3,4],[5,6,7]]\nprint(minimumTime(moveTime))", "answerLanguage": "python"}
   """   
-
+  """
+  {
+  "message": "(Answer of (kennywelcome' account) for Challenge(2025-05-08 00:00:00+00:00)) successfully Created or Modified",
+  "solve": "True",
+  "userCodeResult": "10"
+  }
+  """
