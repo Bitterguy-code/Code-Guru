@@ -9,6 +9,7 @@
 
 .history_weapons img {
   position: absolute;
+  cursor: pointer;
 }
 
 #weapon1 {
@@ -16,6 +17,7 @@
   left: 83vw;
   top: 20vh;
 }
+
 
 #weapon2 {
   width: 450px;

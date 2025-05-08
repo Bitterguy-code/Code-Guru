@@ -1,3 +1,4 @@
+import "./challengedaily.css";
 import { useEffect, useState } from "react";
 import MonacoEditor from "../components/monacoEditor";
 import Button from "react-bootstrap/Button";
@@ -6,8 +7,7 @@ import {
   putAPIDailyChallengeAnswer,
 } from "../utilities";
 import ChallengeDisplay from "../components/challengeDisplay";
-import parse from 'html-react-parser';
-
+import parse from "html-react-parser";
 
 export default function ChallengeDailyPage() {
   const [dailyChallengeData, setDailyChallengeData] = useState();
@@ -35,6 +35,14 @@ export default function ChallengeDailyPage() {
     setAPIAnswer();
   }, [editorCode]);
 
+  const handleRun = () => {
+    console.log("handle run");
+  };
+
+  const handleSubmit = () => {
+    console.log("handle submit");
+  };
+
   return (
     <>
       <div className="flex h-200">
@@ -47,7 +55,6 @@ export default function ChallengeDailyPage() {
 
         <section className="w-1/2 p-3">
           <div className="mx-auto h-3/4 bg-white rounded-xl shadow-md">
-
             <div>
               <label>Choose a language:</label>
               <select
@@ -58,7 +65,6 @@ export default function ChallengeDailyPage() {
                 <option value="javascript">JavaScript</option>
                 <option value="python">Python</option>
               </select>
-
             </div>
             <MonacoEditor
               language={editorLanguage}
@@ -67,13 +73,11 @@ export default function ChallengeDailyPage() {
             />
           </div>
 
-
-
           <div className="mx-auto h-1/4 p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
             <div className="flex flex-col gap-1">
               <div className="flex gap-2">
-                <Button>run</Button>
-                <Button>submit</Button>
+                <button onClick={handleRun}>Run</button>
+                <button onClick={handleSubmit}>Submit</button>
               </div>
               <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
                 <h1>Input:</h1>

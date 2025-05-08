@@ -25,28 +25,36 @@ import suitHidden from "../challengeAssets/suitHidden.png";
 export default function ChallengeHistoryPage() {
   const [challenges, setChallenges] = useState([]);
   const weaponIcons = [
-    { normal: suit, hidden: suitHidden },
-    { normal: trainingDummy, hidden: trainingDummyHidden },
-    { normal: katana, hidden: katanaHidden },
-    { normal: sai, hidden: saiHidden },
-    { normal: boStaff, hidden: boStaffHidden },
-    { normal: nunchaku, hidden: nunchakuHidden },
-    { normal: kusarigama, hidden: kusarigamaHidden },
-    { normal: bokken, hidden: bokkenHidden },
-    { normal: gong, hidden: gongHidden },
-    { normal: ninjaStar, hidden: ninjaStarHidden },
+    { normal: suit, hidden: suitHidden, title: "Ninja Suit" },
+    {
+      normal: trainingDummy,
+      hidden: trainingDummyHidden,
+      title: "Training Dummy",
+    },
+    { normal: katana, hidden: katanaHidden, title: "Katana" },
+    { normal: sai, hidden: saiHidden, title: "Sai" },
+    { normal: boStaff, hidden: boStaffHidden, title: "Bo Staff" },
+    { normal: nunchaku, hidden: nunchakuHidden, title: "Nunchaku" },
+    { normal: kusarigama, hidden: kusarigamaHidden, title: "Kusarigama" },
+    { normal: bokken, hidden: bokkenHidden, title: "Bokken" },
+    { normal: gong, hidden: gongHidden, title: "Gong" },
+    { normal: ninjaStar, hidden: ninjaStarHidden, title: "Shuriken" },
   ];
 
   //useEffect on load - get 10 recent finished challenges, put into challenges
-
+  useEffect(() => {
+    setChallenges([true, true, true]); //testing weapons
+  }, []);
   //create 10 positions for each challenge
   const positions = weaponIcons.map((icon, i) => ({
     icon: challenges[i] ? icon.normal : icon.hidden,
     challenge: challenges[i] || null,
+    title: challenges[i] ? icon.title : null,
   }));
+
   const handleClick = (challenge) => {
     challenge
-      ? alert("Go to next page")
+      ? alert("TODO: use challenge.id to go to another page")
       : alert(
           "Weapon not unlocked. Do more daily challenges to unlock this weapon."
         );
@@ -54,14 +62,13 @@ export default function ChallengeHistoryPage() {
   return (
     <div className="history_container">
       <div className="history_weapons">
-        {positions.map(({ icon, challenge }, i) => (
+        {positions.map(({ icon, challenge, title }, i) => (
           <img
             src={icon}
             id={`weapon${i + 1}`}
             alt={challenge ? "Weapon" : "Hidden weapon"}
-
-            // add href to link to challenges page
-            // add hover to see title of weapon/challenge or "weapon not unlocked" for absence of challenge
+            onClick={() => handleClick(challenge)}
+            title={title ? title : "Hidden weapon"} //add challenge title after title -> title + \n challenge
           />
         ))}
       </div>

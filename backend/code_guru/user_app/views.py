@@ -10,6 +10,7 @@ from rest_framework.status import (
     HTTP_201_CREATED,
     HTTP_404_NOT_FOUND,
     HTTP_204_NO_CONTENT,
+    HTTP_200_OK
 )
 
 
@@ -23,7 +24,7 @@ class Sign_Up(APIView):
                 {"username":new_user.username, "token":new_user_token.key}, status=HTTP_201_CREATED
             )
         except Exception as e:
-            return Response("Username or Email already exit")
+            return Response("Username or Email already exist")
 """
 input: {"username":"kennywelcome","email":"kenny@gmail.com","password":"12345678"}
 output: {"username":"kennywelcome", "token":"73ae179ee705ce29b4a024b0a1f6d2961fd46258"}
@@ -35,7 +36,7 @@ class Log_In(APIView):
         search_user = authenticate(**request.data) 
         if search_user: 
             user_token, is_created = Token.objects.get_or_create(user=search_user)
-            return Response({"username":search_user.username,"token":user_token.key})
+            return Response({"username":search_user.username,"token":user_token.key}, status=HTTP_200_OK)
         else:
             return Response("Wrong email or password")
 """
@@ -71,3 +72,7 @@ class Log_Out(TokenReq):
 The request must have a token in the headers
 """
         
+
+class Info(TokenReq):
+    def get(self, request):
+        return Response({"username" : request.user.username})

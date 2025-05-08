@@ -1,20 +1,28 @@
 import "./signup.css";
 import { useState } from "react";
+import { userSignUp } from "../utilities";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setpasswordConfirm] = useState("");
+  const { setUser } = useOutletContext();
+  const navigate = useNavigate();
+
   const handleForm = async (e) => {
     e.preventDefault();
     if (password !== passwordConfirm) {
       alert("Passwords do not match");
       return;
     } else {
-      //userRegistration(email,username,password)
-      //if(user) then alert success and navigate to some other page
-      alert("Successful sign up");
+      const user = await userSignUp(username, email, password);
+      if (user) {
+        setUser(user);
+        console.log("successful sign up");
+        navigate("/playground")
+      }
     }
   };
   return (
