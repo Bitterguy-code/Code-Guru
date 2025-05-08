@@ -347,8 +347,6 @@ class DailyAnswer(TokenReq):
     return solve, result
 
 
-    
-
   def get(self,request):
     the_account = request.auth.user.account
     all_answer = Answer.objects.filter(solve=True)
