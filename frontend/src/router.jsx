@@ -8,11 +8,15 @@ import PlaygroundPage from "./pages/PlaygroundPage.jsx";
 import ChallengeHistoryPage from "./pages/ChallengeHistoryPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LogInPage from "./pages/LogInPage.jsx";
+import { userConfirmation } from "./utilities.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    loader: userConfirmation,
     children: [
       {
         index: true,

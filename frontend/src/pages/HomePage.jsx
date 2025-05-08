@@ -11,7 +11,7 @@ export default function HomePage() {
         <h1
           className="light_green"
           onMouseOver={() => {
-            setHoverDesc("AI documentation and blah blah blah");
+            setHoverDesc("Get personalized code reviews and guidance from an AI mentor");
             console.log(hoverDesc);
           }}
           onMouseOut={() => setHoverDesc("")}
@@ -21,17 +21,7 @@ export default function HomePage() {
         <h1
           className="dark_green"
           onMouseOver={() => {
-            setHoverDesc("Community code review forum board thingy");
-            console.log(hoverDesc);
-          }}
-          onMouseOut={() => setHoverDesc("")}
-        >
-          <Typewriter text="Community Code Review" />
-        </h1>
-        <h1
-          className="light_green"
-          onMouseOver={() => {
-            setHoverDesc("New challenges every day");
+            setHoverDesc("Practice and improve your coding skills with a new challenge every day");
             console.log(hoverDesc);
           }}
           onMouseOut={() => setHoverDesc("")}
@@ -39,9 +29,19 @@ export default function HomePage() {
           <Typewriter text="Daily Challenges" />
         </h1>
         <h1
+          className="light_green"
+          onMouseOver={() => {
+            setHoverDesc("Complete daily coding challenges to unlock all 10 dojo items");
+            console.log(hoverDesc);
+          }}
+          onMouseOut={() => setHoverDesc("")}
+        >
+          <Typewriter text="Unlock Dojo Items" />
+        </h1>
+        <h1
           className="dark_green"
           onMouseOver={() => {
-            setHoverDesc("Up-to-date newsletter");
+            setHoverDesc("Stay up-to-date and informed about latest tech news and trends");
             console.log(hoverDesc);
           }}
           onMouseOut={() => setHoverDesc("")}

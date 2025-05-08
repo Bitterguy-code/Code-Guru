@@ -1,24 +1,33 @@
 import "./login.css";
 import { useState } from "react";
+import { useOutletContext, useNavigate } from "react-router-dom";
+import { userLogIn } from "../utilities";
 
 export default function LogInPage() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useOutletContext();
+  const navigate = useNavigate();
+
   const handleForm = async (e) => {
     e.preventDefault();
-    //userLogin(email,password)
-    //if(user) then navigate to some other page
+    const user = await userLogIn(username, password);
+    if (user) {
+      setUser(user);
+      navigate("/playground");
+    }
+    console.log("click test")
   };
   return (
-    <div className="login_container">
+    <div className="login_container" onSubmit={handleForm}>
       <form className="login_form">
         <input
-          type="email"
-          placeholder="Email"
+          type="text"
+          placeholder="Username"
           size="30"
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         ></input>
         <br />
         <input
@@ -30,7 +39,7 @@ export default function LogInPage() {
           onChange={(e) => setPassword(e.target.value)}
         ></input>
         <br />
-        <button onClick={handleForm}>Log In</button>
+        <button type="submit">Log In</button>
       </form>
     </div>
   );
