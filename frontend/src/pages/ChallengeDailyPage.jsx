@@ -28,26 +28,27 @@ export default function ChallengeDailyPage() {
     getData();
   }, []);
   useEffect(() => {
-    console.log(dailyChallengeData);
-  }, [dailyChallengeData]);
-  useEffect(() => {
     console.log(editorCode);
     setAPIAnswer();
   }, [editorCode]);
+
+
 
   return (
     <>
       <div className="flex h-200">
         {/* this holds 2 columns */}
         <section className="w-1/2 p-3  overflow-auto">
-          {dailyChallengeData ? (
+          {dailyChallengeData ? 
             <ChallengeDisplay data={dailyChallengeData} />
-          ) : null}
+           : null}
         </section>
+
+
+
 
         <section className="w-1/2 p-3">
           <div className="mx-auto h-3/4 bg-white rounded-xl shadow-md">
-
             <div>
               <label>Choose a language:</label>
               <select
@@ -58,7 +59,6 @@ export default function ChallengeDailyPage() {
                 <option value="javascript">JavaScript</option>
                 <option value="python">Python</option>
               </select>
-
             </div>
             <MonacoEditor
               language={editorLanguage}
@@ -68,27 +68,43 @@ export default function ChallengeDailyPage() {
           </div>
 
 
-
           <div className="mx-auto h-1/4 p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
             <div className="flex flex-col gap-1">
-              <div className="flex gap-2">
+              <div className="flex gap-4">
+                <p>Version: {editorLanguage}</p>
                 <Button>run</Button>
                 <Button>submit</Button>
               </div>
               <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
-                <h1>Input:</h1>
-                <h1>[12,345,2,6,7896]</h1>
+                <h1>Input: </h1>
+                <h1>
+                  {dailyChallengeData && editorLanguage == "javascript"?
+                  dailyChallengeData.input_J
+                  : dailyChallengeData && editorLanguage == "python"?
+                    dailyChallengeData.input_P
+                    : null
+                  }
+                </h1>
+              </div>
+              <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
+                <h1>Expected: </h1>
+                <h1>
+                  {dailyChallengeData && editorLanguage == "javascript"?
+                    dailyChallengeData.output_J
+                    : dailyChallengeData && editorLanguage == "python"?
+                      dailyChallengeData.output_P
+                      : null
+                    }
+                </h1>
               </div>
               <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
                 <h1>Output: </h1>
                 <h1>undefined</h1>
               </div>
-              <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
-                <h1>Expected: </h1>
-                <h1>2</h1>
-              </div>
             </div>
           </div>
+
+          
         </section>
       </div>
     </>
