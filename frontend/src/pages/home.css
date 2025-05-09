@@ -1,13 +1,17 @@
 .home_container {
   height: 90vh;
+  min-height: calc(100vh - 5vw);
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   background-image: url("../assets/homeBackground.png");
   background-size: cover;
   background-position: center 60%;
 }
 
 .home_left_container {
+  padding-top: 5vw;
   margin-top: 5%;
   margin-left: 5%;
   width: 35%;
