@@ -1,73 +1,93 @@
 .history_container {
-  height: 90vh;
+  position: relative;
   width: 100%;
-  display: flex;
-  background-image: url("../challengeAssets/dojoInside.png");
-  background-size: cover;
-  background-position: center 60%;
+  margin: auto;
+  height: 100vh;
+  overflow: hidden;
+  margin-top:4vw;
+}
+.history_background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
+.history_weapons {
+  margin-top: 5vw;
+}
 .history_weapons img {
   position: absolute;
   cursor: pointer;
+  max-width: 700px;
 }
 
+/* ninja suit */
 #weapon1 {
-  width: 250px;
-  left: 83vw;
-  top: 20vh;
+  width: 15%;
+  left: 85%;
+  top: 20%;
 }
 
-
+/* training dummy */
 #weapon2 {
-  width: 450px;
-  left: 1vw;
-  top: 42vh;
+  width: 25%;
+  left: 5%;
+  top: 45%;
 }
 
+/* katana (left top sword)*/
 #weapon3 {
-  width: 300px;
-  left: 20vw;
-  top: -2.5vh;
+  width: 17%;
+  left: 22%;
+  top: 0.5%;
 }
 
+/* sai (double sword)*/
 #weapon4 {
-  width: 200px;
-  left: 29.5vw;
-  top: 40vh;
+  width: 12%;
+  left: 30%;
+  top: 40%;
 }
 
+/* bo staff */
 #weapon5 {
-  width: 300px;
-  left: 39vw;
-  top: 20vh;
+  width: 15%;
+  left: 41.5%;
+  top: 20%;
 }
 
+/* nunchucks */
 #weapon6 {
-  width: 200px;
-  left: 48vw;
-  top: 25vh;
+  width: 15%;
+  left: 47%;
+  top: 25%;
 }
 
+/* kusarigama (sickle with chain/ball) */
 #weapon7 {
-  width: 200px;
-  left: 56vw;
-  top: 38vh;
+  width: 12%;
+  left: 57%;
+  top: 38%;
 }
 
+/* bokken (top right weapon) */
 #weapon8 {
-  width: 350px;
-  left: 55vw;
-  top: 1.5vh;
+  width: 17%;
+  left: 60%;
+  top: 5.5%;
 }
 
+/* gong */
 #weapon9 {
-  width: 250px;
-  left: 67vw;
-  top: 64vh;
+  width: 20%;
+  left: 68%;
+  top: 55%;
 }
+
+/* ninja star */
 #weapon10 {
-  width: 150px;
-  left: 29.5vw;
-  top: 26vh;
+  width: 10%;
+  left: 30%;
+  top: 25%;
 }

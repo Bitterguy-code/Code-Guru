@@ -4,10 +4,7 @@
 /* @tailwind utilities; */
 @import "tailwindcss";
 
-/* Offset navbar */
-#root {
-  margin-top: 5vw;
-}
+
 
 body {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",

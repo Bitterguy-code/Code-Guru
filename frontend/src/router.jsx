@@ -10,12 +10,14 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import LogInPage from "./pages/LogInPage.jsx";
 import { userConfirmation } from "./utilities.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import NotFoundPage from "./pages/NotFoundPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     loader: userConfirmation,
+    errorElement: <NotFoundPage/>,
     children: [
       {
         index: true,
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LogInPage />,
+      },
+      {
+        path: "/*",
+        element: <NotFoundPage />,
       },
       {
         path: "/challenge",

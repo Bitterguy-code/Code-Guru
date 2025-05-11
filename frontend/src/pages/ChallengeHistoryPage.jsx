@@ -1,6 +1,7 @@
 import "./challengehistory.css";
 import { useState, useEffect } from "react";
 
+import dojoInside from "../challengeAssets/dojoInside.png";
 import ninjaStar from "../challengeAssets/ninjaStar.png";
 import trainingDummy from "../challengeAssets/trainingDummy.png";
 import katana from "../challengeAssets/katana.png";
@@ -61,6 +62,11 @@ export default function ChallengeHistoryPage() {
   };
   return (
     <div className="history_container">
+      <img
+        src={dojoInside}
+        alt="Inside of dojo"
+        className="history_background"
+      ></img>
       <div className="history_weapons">
         {positions.map(({ icon, challenge, title }, i) => (
           <img

@@ -1,5 +1,5 @@
 .home_container {
-  height: 90vh;
+  height: 100vh;
   min-height: calc(100vh - 5vw);
   width: 100%;
   display: flex;
