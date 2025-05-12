@@ -1,11 +1,6 @@
-/* placed here so that custom css overrides */
-/* @tailwind base; */
-/* @tailwind components;  */
-/* @tailwind utilities; */
 @import "tailwindcss";
 
-
-
+/* Default font, reset margin */
 body {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;

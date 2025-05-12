@@ -2,8 +2,7 @@ import "./playground.css";
 import MonacoEditor from "../components/monacoEditor";
 import { useState } from "react";
 import { putAPIPlaygroundAnswer } from "../utilities";
-import parse from 'html-react-parser';
-
+import parse from "html-react-parser";
 
 export default function PlaygroundPage() {
   const [value, setValue] = useState(`function hello() {
@@ -13,21 +12,21 @@ export default function PlaygroundPage() {
 hello();`);
   const [codingLanguage, setCodingLanguage] = useState("javascript");
   const [userQuestion, setUserQuestion] = useState("");
-  const [playgroundAnswer, setPlaygroundAnswer] = useState()
+  const [playgroundAnswer, setPlaygroundAnswer] = useState();
 
-  // TEST
-  //   useEffect(() => {
-  //     console.log(codingLanguage);
-  //   }, [codingLanguage]);
-
+  // On Ask AI submit, get answer from OpenAI
   const handleClick = async () => {
-    setPlaygroundAnswer("loading...")
+    setPlaygroundAnswer("Loading...");
     // console.log(value);
     // console.log(userQuestion);
     // console.log(codingLanguage);
-    const result = await putAPIPlaygroundAnswer(codingLanguage, value, userQuestion)
-    setPlaygroundAnswer(result)
-  }; //TODO: send request to api with value, question, codingLanguage. get answer
+    const result = await putAPIPlaygroundAnswer(
+      codingLanguage,
+      value,
+      userQuestion
+    );
+    setPlaygroundAnswer(result);
+  };
 
   return (
     <div className="playground_container">
@@ -65,26 +64,21 @@ hello();`);
       <div className="playground_right_container ">
         <div className="playground_correction">
           <label>Answer</label>
-            {/* {parse(playgroundAnswer)} */}
-            
-            
-            {/* <section>
+          {/* {parse(playgroundAnswer)} */}
+
+          {/* <section>
               {playgroundAnswer}
             </section> */}
-            <section className="h-170 overflow-auto">
-              {playgroundAnswer?
+          <section className="h-170 overflow-auto">
+            {playgroundAnswer
+              ? playgroundAnswer == "loading..."
+                ? playgroundAnswer
+                : parse(playgroundAnswer)
+              : null}
+          </section>
 
-                playgroundAnswer == "loading..."?
-                playgroundAnswer:
-                parse(playgroundAnswer)
-              
-              :null}
-            </section>
-
-
-
-{/* <> <p className="text-base sm:text-lg mb-4 break-words"> Your function currently logs <code className="bg-gray-100 px-1 py-0.5 rounded">'Hello world!'</code> to the console. To make it better, consider adding flexibility by allowing a custom greeting message and returning the message instead of just logging it. This enhances reusability and makes the function more versatile. </p> <pre className="bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto text-sm break-words"> <strong className="block">Improved Version:</strong> {`function hello(name = 'world') { const message = \`Hello \${name}!\`; console.log(message); return message; } hello(); // Logs "Hello world!" hello('Alice'); // Logs "Hello Alice!" `} </pre> <p className="text-base sm:text-lg mb-4 break-words"> <strong className="font-semibold">What's changed:</strong> The function now accepts a <code className="bg-gray-100 px-1 py-0.5 rounded">name</code> parameter (default is <code className="bg-gray-100 px-1 py-0.5 rounded">'world'</code>). It returns the greeting, making it suitable for more than just console output. </p> <p className="text-base sm:text-lg mb-4 break-words"> <strong className="font-semibold">Further improvements:</strong> Depending on your needs, you could: <ul className="list-disc pl-5 space-y-1 text-sm sm:text-base"> <li>Add validation to ensure <code className="bg-gray-100 px-1 py-0.5 rounded">name</code> is a string.</li> <li>Support localization or additional formatting.</li> <li>Integrate with UI components if used in React.</li> </ul> </p> </> */}
-            {/* <>
+          {/* <> <p className="text-base sm:text-lg mb-4 break-words"> Your function currently logs <code className="bg-gray-100 px-1 py-0.5 rounded">'Hello world!'</code> to the console. To make it better, consider adding flexibility by allowing a custom greeting message and returning the message instead of just logging it. This enhances reusability and makes the function more versatile. </p> <pre className="bg-gray-50 border border-gray-200 rounded p-4 overflow-x-auto text-sm break-words"> <strong className="block">Improved Version:</strong> {`function hello(name = 'world') { const message = \`Hello \${name}!\`; console.log(message); return message; } hello(); // Logs "Hello world!" hello('Alice'); // Logs "Hello Alice!" `} </pre> <p className="text-base sm:text-lg mb-4 break-words"> <strong className="font-semibold">What's changed:</strong> The function now accepts a <code className="bg-gray-100 px-1 py-0.5 rounded">name</code> parameter (default is <code className="bg-gray-100 px-1 py-0.5 rounded">'world'</code>). It returns the greeting, making it suitable for more than just console output. </p> <p className="text-base sm:text-lg mb-4 break-words"> <strong className="font-semibold">Further improvements:</strong> Depending on your needs, you could: <ul className="list-disc pl-5 space-y-1 text-sm sm:text-base"> <li>Add validation to ensure <code className="bg-gray-100 px-1 py-0.5 rounded">name</code> is a string.</li> <li>Support localization or additional formatting.</li> <li>Integrate with UI components if used in React.</li> </ul> </p> </> */}
+          {/* <>
   <p className="text-base sm:text-lg mb-4 break-words">
     Here is a basic JavaScript function that prints <code className="bg-gray-100 px-1 py-0.5 rounded">'Hello world!'</code> to the console:
   </p>
@@ -105,8 +99,7 @@ hello();`}
   </p>
 </> */}
 
-
-{/* <>
+          {/* <>
   <p className="text-base sm:text-lg mb-4 break-words">
     You can improve your JavaScript function to make it more flexible and reusable by allowing it to accept a message as an argument, instead of only printing <code className="bg-gray-100 px-1 py-0.5 rounded">Hello world!</code>. This way, you can use the function to print any message you want.
   </p>
@@ -131,7 +124,7 @@ hello('Welcome to my app!');
   </p>
 </> */}
 
-{/* <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
+          {/* <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
       <div className="bg-gray-900 rounded-lg shadow-2xl p-8 max-w-xl w-full border-2 border-gray-700">
         <h2 className="text-2xl font-bold text-cyan-400 mb-6 font-mono">JavaScript Example</h2>
         <pre className="bg-gray-800 rounded-md p-6 overflow-x-auto mb-8 border border-gray-700">
@@ -149,7 +142,7 @@ hello();`}
         </div>
       </div>
     </div> */}
-{/* <>
+          {/* <>
   <p className="text-base sm:text-lg mb-4 break-words">
     Here is an improved version of your JavaScript function. This new version is more flexible, allows you to display a custom message by accepting an argument, and defaults to <code className="bg-gray-100 px-1 py-0.5 rounded">'Hello world!'</code> if no message is provided.
   </p>
@@ -173,8 +166,6 @@ hello('Welcome to coding!'); // Output: Welcome to coding!
     </ul>
   </p>
 </> */}
-
-
         </div>
       </div>
     </div>

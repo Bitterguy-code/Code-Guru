@@ -9,4 +9,7 @@
 
 .daily_challenge_container{
   padding-top:5vw;
+  background-image: url("../assets/playgroundBackground.png");
+  background-size: cover;
+  background-position: center 60%;
 }

@@ -277,6 +277,7 @@ class DailyChallenge(APIView):
 
       newChallenge = Challenge.objects.create(**dailyDataFormatted)
       return Response(newChallenge)
+      # return Response("hello")
     else:
       # ALTER PAST CHALLENGE|HTML
       # ready_JSX = DailyChallenge.AI_HTML_TO_JSX(resultSer.data[0]["question"])
