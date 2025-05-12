@@ -249,11 +249,9 @@ class DailyChallenge(APIView):
   def get(self,request,date):
     result = Challenge.objects.filter(date__date= date)
     resultSer = ChallengeSerializer(result, many=True)
-
+    
     if len(resultSer.data) == 0:
       data = DailyChallenge.API_leetcode()
-      print(data)
-
       clean_HTML = DailyChallenge.REFORMATED_unencoded_HTML(data["question"])
       response_AI = DailyChallenge.AI_HTML_TO_JSX(clean_HTML)
       clean_JSX = DailyChallenge.REFORMATED_AI_JSX(response_AI)
@@ -273,10 +271,10 @@ class DailyChallenge(APIView):
         "input_P": input_P,
         "output_P": output_P,
       }
-      print(dailyDataFormatted)
 
       newChallenge = Challenge.objects.create(**dailyDataFormatted)
-      return Response(newChallenge)
+      newChallengeSer = ChallengeSerializer(newChallenge)
+      return Response(newChallengeSer)
     else:
       # ALTER PAST CHALLENGE|HTML
       # ready_JSX = DailyChallenge.AI_HTML_TO_JSX(resultSer.data[0]["question"])

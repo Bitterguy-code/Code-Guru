@@ -123,3 +123,13 @@ export async function putAPIPlaygroundAnswer(language, code, question){
   // console.log(response.data)
   return response.data
 }
+
+export async function getAPINewsletter() {
+  const currentDate = getDate()
+  let response = await api.get(`newsletter/${currentDate}/`,{})
+
+  if(response.status === 200){
+    console.log(response.data)
+    return response.data
+  }
+}
