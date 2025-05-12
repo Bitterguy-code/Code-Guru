@@ -1,7 +1,9 @@
 import "./playground.css";
 import MonacoEditor from "../components/monacoEditor";
-
 import { useState } from "react";
+import { putAPIPlaygroundAnswer } from "../utilities";
+import parse from 'html-react-parser';
+
 
 export default function PlaygroundPage() {
   const [value, setValue] = useState(`function hello() {
@@ -11,16 +13,20 @@ export default function PlaygroundPage() {
 hello();`);
   const [codingLanguage, setCodingLanguage] = useState("javascript");
   const [userQuestion, setUserQuestion] = useState("");
+  const [playgroundAnswer, setPlaygroundAnswer] = useState()
 
   // TEST
   //   useEffect(() => {
   //     console.log(codingLanguage);
   //   }, [codingLanguage]);
 
-  const handleClick = () => {
-    console.log(value);
-    console.log(userQuestion);
-    console.log(codingLanguage);
+  const handleClick = async () => {
+    setPlaygroundAnswer("loading...")
+    // console.log(value);
+    // console.log(userQuestion);
+    // console.log(codingLanguage);
+    const result = await putAPIPlaygroundAnswer(codingLanguage, value, userQuestion)
+    setPlaygroundAnswer(result)
   }; //TODO: send request to api with value, question, codingLanguage. get answer
 
   return (
@@ -59,6 +65,10 @@ hello();`);
       <div className="playground_right_container">
         <div className="playground_correction">
           <label>Answer</label>
+            {/* {parse(playgroundAnswer)} */}
+            {/* <section>
+              {playgroundAnswer}
+            </section> */}
         </div>
       </div>
     </div>

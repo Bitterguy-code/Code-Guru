@@ -97,12 +97,13 @@ export async function getAPIDailyChallengeData(){
     return null
    }
 
+
 export async function putAPIDailyChallengeAnswer(challengeID, answerCode, answerLanguage){
-    api.defaults.headers.common["Authorization"] = "Token 73ae179ee705ce29b4a024b0a1f6d2961fd46258" // this is a test token
+    // api.defaults.headers.common["Authorization"] = `Token ${token}`
     let response = await api.put("challenge/answer/", {
-        "challengeID": challengeID,
-        "answerCode": answerCode,
-        "answerLanguage": answerLanguage
+        challengeID,
+        answerCode,
+        answerLanguage
     })
 
     // if(response.status === 200){
@@ -110,4 +111,15 @@ export async function putAPIDailyChallengeAnswer(challengeID, answerCode, answer
     // }
     console.log(response.data)
     return response.data
+}
+
+
+export async function putAPIPlaygroundAnswer(language, code, question){
+  let response = await api.put("playground/answer/", {
+      language,
+      code,
+      question
+  })
+  // console.log(response.data)
+  return response.data
 }
