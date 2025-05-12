@@ -120,18 +120,13 @@ export async function getAPIDailyChallengeData() {
   return null;
 }
 
-//TODO: comment
-export async function putAPIDailyChallengeAnswer(
-  challengeID,
-  answerCode,
-  answerLanguage
-) {
-  // api.defaults.headers.common["Authorization"] = `Token ${token}`
-  let response = await api.put("challenge/answer/", {
-    challengeID,
-    answerCode,
-    answerLanguage,
-  });
+export async function putAPIDailyChallengeAnswer(challengeID, answerCode, answerLanguage){
+    // api.defaults.headers.common["Authorization"] = "Token 73ae179ee705ce29b4a024b0a1f6d2961fd46258" // this is a test token
+    let response = await api.put("challenge/answer/", {
+        "challengeID": challengeID,
+        "answerCode": answerCode,
+        "answerLanguage": answerLanguage
+    })
 
   // if(response.status === 200){
   //     console.log(response.data)
