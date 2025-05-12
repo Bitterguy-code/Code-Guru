@@ -12,7 +12,7 @@ export default function NavBar({ user, handleLogout }) {
           <>
             <a href="/playground">Playground</a>
             <a href="/challenge">Daily Challenge</a>
-            <a href="/history">Challenge History</a>
+            <a href="/progress">Challenge Progress</a>
             <a href="/newsletter">Newsletter</a>
           </>
         ) : (

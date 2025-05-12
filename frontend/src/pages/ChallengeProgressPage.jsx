@@ -1,4 +1,4 @@
-import "./challengehistory.css";
+import "./challengeprogress.css";
 import { useState, useEffect } from "react";
 
 import dojoInside from "../challengeAssets/dojoInside.png";
@@ -22,8 +22,9 @@ import kusarigamaHidden from "../challengeAssets/kusarigamaHidden.png";
 import bokkenHidden from "../challengeAssets/bokkenHidden.png";
 import gongHidden from "../challengeAssets/gongHidden.png";
 import suitHidden from "../challengeAssets/suitHidden.png";
+import redPanda from "../challengeAssets/redPanda.png";
 
-export default function ChallengeHistoryPage() {
+export default function ChallengeProgressPage() {
   const [challenges, setChallenges] = useState([]);
   const weaponIcons = [
     { normal: suit, hidden: suitHidden, title: "Ninja Suit" },
@@ -44,7 +45,7 @@ export default function ChallengeHistoryPage() {
 
   //useEffect on load - get 10 recent finished challenges, put into challenges
   useEffect(() => {
-    setChallenges([true, true, true]); //testing weapons
+    setChallenges([true, true, true, true, true, true, true, true, true]);
   }, []);
   //create 10 positions for each challenge
   const positions = weaponIcons.map((icon, i) => ({
@@ -61,13 +62,13 @@ export default function ChallengeHistoryPage() {
         );
   };
   return (
-    <div className="history_container">
+    <div className="progress_container">
       <img
         src={dojoInside}
         alt="Inside of dojo"
-        className="history_background"
+        className="progress_background"
       ></img>
-      <div className="history_weapons">
+      <div className="progress_weapons">
         {positions.map(({ icon, challenge, title }, i) => (
           <img
             src={icon}
@@ -77,6 +78,9 @@ export default function ChallengeHistoryPage() {
             title={title ? title : "Hidden weapon"} //add challenge title after title -> title + \n challenge
           />
         ))}
+        {challenges.length === 10 ? (
+          <img src={redPanda} className="master_panda"></img>
+        ) : null}
       </div>
     </div>
   );

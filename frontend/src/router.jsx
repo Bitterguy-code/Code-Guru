@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage.jsx";
 import ChallengeDailyPage from "./pages/ChallengeDailyPage.jsx";
 import NewsletterPage from "./pages/NewsletterPage.jsx";
 import PlaygroundPage from "./pages/PlaygroundPage.jsx";
-import ChallengeHistoryPage from "./pages/ChallengeHistoryPage.jsx";
+import ChallengeProgressPage from "./pages/ChallengeProgressPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LogInPage from "./pages/LogInPage.jsx";
 import { userConfirmation } from "./utilities.jsx";
@@ -44,10 +44,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/history",
+        path: "/progress",
         element: (
           <PrivateRoute>
-            <ChallengeHistoryPage />
+            <ChallengeProgressPage />
           </PrivateRoute>
         ),
       },
