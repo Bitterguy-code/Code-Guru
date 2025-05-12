@@ -84,42 +84,50 @@ export function getDate() {
   return formattedDate;
 }
 
-export async function getAPIDailyChallengeData(){
-    const currentDate = getDate()
-    let response = await api.get(`challenge/html/${currentDate}/`, {})
+export async function getAPIDailyChallengeData() {
+  const currentDate = getDate();
+  let response = await api.get(`challenge/html/${currentDate}/`, {});
 
-    if(response.status === 200){
-        return response.data
-    }else{
-        console.log(response.data)
-    }
-    // console.log(response.data)
-    return null
-   }
-
-
-export async function putAPIDailyChallengeAnswer(challengeID, answerCode, answerLanguage){
-    // api.defaults.headers.common["Authorization"] = `Token ${token}`
-    let response = await api.put("challenge/answer/", {
-        challengeID,
-        answerCode,
-        answerLanguage
-    })
-
-    // if(response.status === 200){
-    //     console.log(response.data)
-    // }
-    console.log(response.data)
-    return response.data
+  if (response.status === 200) {
+    return response.data;
+  } else {
+    console.log(response.data);
+  }
+  // console.log(response.data)
+  return null;
 }
 
+export async function putAPIDailyChallengeAnswer(
+  challengeID,
+  answerCode,
+  answerLanguage
+) {
+  // api.defaults.headers.common["Authorization"] = `Token ${token}`
+  let response = await api.put("challenge/answer/", {
+    challengeID,
+    answerCode,
+    answerLanguage,
+  });
 
-export async function putAPIPlaygroundAnswer(language, code, question){
+  // if(response.status === 200){
+  //     console.log(response.data)
+  // }
+  console.log(response.data);
+  return response.data;
+}
+
+export async function putAPIPlaygroundAnswer(language, code, question) {
   let response = await api.put("playground/answer/", {
-      language,
-      code,
-      question
-  })
-  // console.log(response.data)
-  return response.data
+    language,
+    code,
+    question,
+  });
+  console.log(response.data)
+  return response.data;
+}
+
+export async function getCompletedChallenges() {
+  let response = await api.get("challenge/answer/");
+  console.log(response.data);
+  return response.data;
 }

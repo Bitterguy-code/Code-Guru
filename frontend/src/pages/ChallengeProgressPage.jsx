@@ -1,6 +1,8 @@
 import "./challengeprogress.css";
 import { useState, useEffect } from "react";
 
+import { getCompletedChallenges } from "../utilities";
+
 import dojoInside from "../challengeAssets/dojoInside.png";
 import ninjaStar from "../challengeAssets/ninjaStar.png";
 import trainingDummy from "../challengeAssets/trainingDummy.png";
@@ -43,20 +45,24 @@ export default function ChallengeProgressPage() {
     { normal: ninjaStar, hidden: ninjaStarHidden, title: "Shuriken" },
   ];
 
-  //useEffect on load - get 10 recent finished challenges, put into challenges
+  //useEffect on load - get 10 finished challenges, put into challenges
   useEffect(() => {
-    setChallenges([true, true, true, true, true, true, true, true, true]);
+    // setChallenges([true,true,true,true,true,true,true,true,true,true])
+    getCompletedChallenges()
+      .then((result) => setChallenges(result.slice(0, 10)))
+      .catch(console.error);
   }, []);
+
   //create 10 positions for each challenge
   const positions = weaponIcons.map((icon, i) => ({
     icon: challenges[i] ? icon.normal : icon.hidden,
-    challenge: challenges[i] || null,
+    challengeObj: challenges[i] || null,
     title: challenges[i] ? icon.title : null,
   }));
 
-  const handleClick = (challenge) => {
-    challenge
-      ? alert("TODO: use challenge.id to go to another page")
+  const handleClick = (challengeObj) => {
+    challengeObj
+      ? console.log(`this is the answer ${challengeObj.id}`)
       : alert(
           "Weapon not unlocked. Do more daily challenges to unlock this weapon."
         );
@@ -69,18 +75,18 @@ export default function ChallengeProgressPage() {
         className="progress_background"
       ></img>
       <div className="progress_weapons">
-        {positions.map(({ icon, challenge, title }, i) => (
+        {positions.map(({ icon, challengeObj, title }, i) => (
           <img
             src={icon}
             id={`weapon${i + 1}`}
-            alt={challenge ? "Weapon" : "Hidden weapon"}
-            onClick={() => handleClick(challenge)}
+            alt={challengeObj ? "Weapon" : "Hidden weapon"}
+            onClick={() => handleClick(challengeObj)}
             title={title ? title : "Hidden weapon"} //add challenge title after title -> title + \n challenge
           />
         ))}
-        {challenges.length === 10 ? (
+        {challenges.length === 10 && (
           <img src={redPanda} className="master_panda"></img>
-        ) : null}
+        )}
       </div>
     </div>
   );
