@@ -11,6 +11,7 @@ export default function SignUpPage() {
   const { setUser } = useOutletContext();
   const navigate = useNavigate();
 
+  //On submit, sign user up and navigate to /playground
   const handleForm = async (e) => {
     e.preventDefault();
     if (password !== passwordConfirm) {
@@ -21,10 +22,11 @@ export default function SignUpPage() {
       if (user) {
         setUser(user);
         console.log("successful sign up");
-        navigate("/playground")
+        navigate("/playground");
       }
     }
   };
+
   return (
     <div className="signup_container">
       <div className="signup_left"></div>

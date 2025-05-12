@@ -4,6 +4,11 @@ export const api = axios.create({
   baseURL: "http://127.0.0.1:8000/api/v1/",
 });
 
+/**
+ * Used in router loader -> whenever you go to route, userConfirmation called
+ * adds auth token to API headers and fetches current user
+ * @return {Object} user object if valid, null if not
+ */
 export const userConfirmation = async () => {
   let token = localStorage.getItem("token");
   if (token) {
@@ -16,6 +21,13 @@ export const userConfirmation = async () => {
   return null;
 };
 
+/**
+ * Used in sign up page -> creates user instance and logs in/sets token
+ * @param {string} username
+ * @param {string} email
+ * @param {string} password
+ * @return {string} username if successful sign up, null if not
+ */
 export async function userSignUp(username, email, password) {
   try {
     let response = await api.post("user/signup/", {
@@ -41,6 +53,12 @@ export async function userSignUp(username, email, password) {
   }
 }
 
+/**
+ * Used in log in page -> logs in as user and sets token
+ * @param {string} username
+ * @param {string} password
+ * @return {string} username if successful sign up, null if not
+ */
 export async function userLogIn(username, password) {
   try {
     let response = await api.post("user/login/", {
@@ -64,6 +82,9 @@ export async function userLogIn(username, password) {
   }
 }
 
+/**
+ * Used in log out element on navbar-> logs user out and deletes token
+ */
 export const userLogOut = async () => {
   let response = await api.delete("user/logout/");
   if (response.status === 204) {
@@ -75,6 +96,7 @@ export const userLogOut = async () => {
   alert("Something went wrong and logout failed");
 };
 
+//TODO: comment
 export function getDate() {
   const now = new Date();
   const year = now.getFullYear();
@@ -84,6 +106,7 @@ export function getDate() {
   return formattedDate;
 }
 
+//TODO: comment
 export async function getAPIDailyChallengeData() {
   const currentDate = getDate();
   let response = await api.get(`challenge/html/${currentDate}/`, {});
@@ -97,6 +120,7 @@ export async function getAPIDailyChallengeData() {
   return null;
 }
 
+//TODO: comment
 export async function putAPIDailyChallengeAnswer(
   challengeID,
   answerCode,
@@ -116,18 +140,23 @@ export async function putAPIDailyChallengeAnswer(
   return response.data;
 }
 
+//TODO: comment
 export async function putAPIPlaygroundAnswer(language, code, question) {
   let response = await api.put("playground/answer/", {
     language,
     code,
     question,
   });
-  console.log(response.data)
+  console.log(response.data);
   return response.data;
 }
 
+/**
+ * Used in challenge progress page
+ * @return {array} array of completed challenge objects
+ */
 export async function getCompletedChallenges() {
   let response = await api.get("challenge/answer/");
-  console.log(response.data);
+  // console.log(response.data);
   return response.data;
 }
