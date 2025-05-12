@@ -1,0 +1,40 @@
+.not_container {
+  height: 100vh;
+  min-height: calc(100vh - 5vw);
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  background-image: url("../assets/sadPanda.png");
+  background-size: cover;
+  background-position: center 70%;
+}
+
+.not_left_container {
+  width: 60%;
+  height: 100%;
+  text-align: center;
+}
+
+.not_right_container {
+  padding-top: 7vw;
+  width: 40%;
+  height: 100%;
+  text-align: center;
+}
+
+.not_right_container h1 {
+  font-weight: bold;
+  font-size: 8vw;
+}
+
+.not_right_container h2 {
+    font-size: 2vw;
+}
+.not_right_container a {
+  text-decoration: underline;
+}
+
+.not_right_container a:hover {
+    color: blue;
+  }

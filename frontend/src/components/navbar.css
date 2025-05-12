@@ -1,10 +1,11 @@
 .topnav {
   background-color: grey;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  height: 5vw;
   border-bottom: 2px solid black;
-  padding: 2px;
+  height: auto;
+  padding: 0.1rem 0.1rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -15,7 +16,7 @@
 .topnav a {
   text-decoration: none;
   color: black;
-  padding: 20px;
+  padding: 0px 20px 0px 20px;
 }
 
 .topnav a:hover {
@@ -24,10 +25,10 @@
 
 .topnav_align_left {
   flex-grow: 1;
-  display:flex;
+  display: flex;
   align-items: center;
 }
 
-.topnav_logout{
-  cursor:pointer;
+.topnav_logout {
+  cursor: pointer;
 }
