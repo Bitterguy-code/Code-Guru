@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-
 ]
 
 AUTH_USER_MODEL = 'user_app.User' 
@@ -79,7 +78,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'code_guru.urls'
+ROOT_URLCONF = 'code_guru_proj.urls'
 
 TEMPLATES = [
     {
@@ -96,7 +95,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'code_guru.wsgi.application'
+WSGI_APPLICATION = 'code_guru_proj.wsgi.application'
 
 
 # Database

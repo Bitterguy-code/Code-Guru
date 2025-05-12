@@ -26,6 +26,7 @@ export default function ChallengeDailyPage() {
   }
   "Need to set up a way to stop spam clicking, because every click creates ain't you API query"
 
+  
   useEffect(() => {
     getData();
   }, []);

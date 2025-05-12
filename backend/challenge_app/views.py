@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Challenge, Answer
@@ -11,11 +11,10 @@ from rest_framework.status import (
     HTTP_204_NO_CONTENT,
 )
 import html
+
 from openai import OpenAI
 from decouple import config
 MY_API_KEY = config('MY_API_KEY')
-
-from openai import OpenAI
 OPENAI_API_KEY = config('OPENAI_API_KEY')
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -202,7 +201,6 @@ class DailyChallenge(APIView):
     ready_JSX = AI_response[start_string+20:end_string]
     return ready_JSX
 
-   
   def AI_input_and_output(jsx):
     response = openai_client.responses.create(
       model="gpt-4.1",
@@ -254,6 +252,8 @@ class DailyChallenge(APIView):
 
     if len(resultSer.data) == 0:
       data = DailyChallenge.API_leetcode()
+      print(data)
+
       clean_HTML = DailyChallenge.REFORMATED_unencoded_HTML(data["question"])
       response_AI = DailyChallenge.AI_HTML_TO_JSX(clean_HTML)
       clean_JSX = DailyChallenge.REFORMATED_AI_JSX(response_AI)
@@ -273,6 +273,7 @@ class DailyChallenge(APIView):
         "input_P": input_P,
         "output_P": output_P,
       }
+      print(dailyDataFormatted)
 
       newChallenge = Challenge.objects.create(**dailyDataFormatted)
       return Response(newChallenge)
@@ -366,6 +367,7 @@ class DailyAnswer(TokenReq):
 
   def put(self, request):
     the_account = request.auth.user.account
+    print(the_account)
     challenge_id = request.data["challengeID"]
     answer_code = request.data["answerCode"]
     print(answer_code)
