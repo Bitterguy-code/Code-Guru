@@ -28,6 +28,7 @@ import redPanda from "../challengeAssets/redPanda.png";
 
 export default function ChallengeProgressPage() {
   const [challenges, setChallenges] = useState([]);
+  const [selectedChallenge, setSelectedChallenge] = useState(null);
   const weaponIcons = [
     { normal: suit, hidden: suitHidden, title: "Ninja Suit" },
     {
@@ -62,7 +63,8 @@ export default function ChallengeProgressPage() {
 
   const handleClick = (challengeObj) => {
     challengeObj
-      ? console.log(`this is the answer ${challengeObj.id}`)
+      ? // ? console.log(`this is the answer ${challengeObj.id}`)
+        setSelectedChallenge(challengeObj)
       : alert(
           "Weapon not unlocked. Do more daily challenges to unlock this weapon."
         );
@@ -88,6 +90,20 @@ export default function ChallengeProgressPage() {
           <img src={redPanda} className="master_panda"></img>
         )}
       </div>
+      
+      {/* display challenge info */}
+      {selectedChallenge && (
+        <div className="modal_overlay" onClick={() => setSelectedChallenge(null)}>
+          <div className="modal_content" onClick={(e) => e.stopPropagation()}>
+            <h2>{selectedChallenge.challenge.questionTitle}</h2>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: selectedChallenge.challenge.question,
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

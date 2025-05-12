@@ -1,8 +1,11 @@
 .playground_container {
   display: flex;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   padding-top:5vw;
+  background-image: url("../assets/playgroundBackground.png");
+  background-size: cover;
+  background-position: center 60%;
 }
 .playground_left_container {
   display: flex;
@@ -25,7 +28,7 @@
 #playground_code_container {
   height: 60vh;
   width: 100%;
-  border: 1px solid green;
+  border: 1px solid black;
 }
 
 .playground_right_container {
@@ -45,6 +48,7 @@
   width: 99.5%;
   resize: none;
   border: 1px solid black;
+  
 }
 
 .playground_prompt button {
@@ -53,3 +57,4 @@
   background-color: lightgray;
   padding: 5px;
 }
+
