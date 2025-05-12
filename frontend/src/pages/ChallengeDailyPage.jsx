@@ -45,7 +45,7 @@ export default function ChallengeDailyPage() {
   };
 
   return (
-    <>
+    <div className="daily_challenge_container">
       <div className="flex h-200">
         {/* this holds 2 columns */}
         <section className="w-1/2 p-3  overflow-auto">
@@ -118,6 +118,6 @@ export default function ChallengeDailyPage() {
           
         </section>
       </div>
-    </>
+    </div>
   );
 }
