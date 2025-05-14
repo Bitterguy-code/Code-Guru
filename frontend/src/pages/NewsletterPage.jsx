@@ -29,7 +29,7 @@ export default function NewsletterPage() {
       parse(newsletterData.html)
       :null
       }
-      
+
       </div>
 
     )
