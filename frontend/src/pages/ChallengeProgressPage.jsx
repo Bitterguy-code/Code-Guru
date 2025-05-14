@@ -25,6 +25,7 @@ import bokkenHidden from "../challengeAssets/bokkenHidden.png";
 import gongHidden from "../challengeAssets/gongHidden.png";
 import suitHidden from "../challengeAssets/suitHidden.png";
 import redPanda from "../challengeAssets/redPanda.png";
+import parse from 'html-react-parser';
 
 export default function ChallengeProgressPage() {
   const [challenges, setChallenges] = useState([]);
@@ -61,6 +62,7 @@ export default function ChallengeProgressPage() {
     title: challenges[i] ? icon.title : null,
   }));
 
+  // if weapon unlocked, setSelectedChallenge which shows modal
   const handleClick = (challengeObj) => {
     challengeObj
       ? // ? console.log(`this is the answer ${challengeObj.id}`)
@@ -76,6 +78,7 @@ export default function ChallengeProgressPage() {
         alt="Inside of dojo"
         className="progress_background"
       ></img>
+      {/* show all images */}
       <div className="progress_weapons">
         {positions.map(({ icon, challengeObj, title }, i) => (
           <img
@@ -86,21 +89,23 @@ export default function ChallengeProgressPage() {
             title={title ? title : "Hidden weapon"} //add challenge title after title -> title + \n challenge
           />
         ))}
+
+        {/* if 10 challenges completed, show red panda  */}
         {challenges.length === 10 && (
           <img src={redPanda} className="master_panda"></img>
         )}
       </div>
-      
-      {/* display challenge info */}
+
+      {/* display challenge info modal */}
       {selectedChallenge && (
-        <div className="modal_overlay" onClick={() => setSelectedChallenge(null)}>
+        <div
+          className="modal_overlay"
+          onClick={() => setSelectedChallenge(null)}
+        >
+          {/* stopPropagation prevents parent onClick from triggering */}
           <div className="modal_content" onClick={(e) => e.stopPropagation()}>
             <h2>{selectedChallenge.challenge.questionTitle}</h2>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: selectedChallenge.challenge.question,
-              }}
-            />
+            <div>{parse(selectedChallenge.challenge.question)}</div>
           </div>
         </div>
       )}

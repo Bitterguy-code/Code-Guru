@@ -1,5 +1,7 @@
 import "./notfound.css";
 
+
+//displays on error page or if page not found
 export default function NotFoundPage() {
   return (
     <div className="not_container">
