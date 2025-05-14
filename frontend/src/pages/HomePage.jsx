@@ -63,7 +63,8 @@ export default function HomePage() {
           <Typewriter text="Developer Newsletter" />
         </h1>
       </div>
-      <div className={hoverDesc ? "home_right_container" : ""}>
+      {/* on text hover, show the right description block */}
+      <div className={hoverDesc && "home_right_container"}>
         {hoverDesc && <p className="home_right_text">{hoverDesc}</p>}
       </div>
     </div>

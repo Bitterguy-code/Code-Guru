@@ -37,6 +37,18 @@ export default function ChallengeDailyPage() {
     console.log(userCode);
   }, [userCode]);
 
+  //while dailyChallengeData and user has submitted code
+  //check if output (according to language) is equal to user's code output
+  //return green div if correct, red div if false
+  const correctAnswer =
+    dailyChallengeData && userCode
+      ? (editorLanguage == "javascript"
+          ? dailyChallengeData.output_J
+          : userCode.userCodeResult) == userCode.userCodeResult
+        ? "bg-green-200"
+        : "bg-red-200"
+      : null;
+
   return (
     <div className="daily_challenge_container">
       <div className="flex h-200">
@@ -92,7 +104,9 @@ export default function ChallengeDailyPage() {
                     : null}
                 </h1>
               </div>
-              <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
+              <div
+                className={`flex gap-2 bg-gray-100 px-1 py-0.5 rounded ${correctAnswer}`}
+              >
                 <h1>Output: </h1>
                 <h1>{userCode ? userCode.userCodeResult : null}</h1>
               </div>
