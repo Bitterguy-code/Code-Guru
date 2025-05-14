@@ -1,105 +1,87 @@
-# 🧠 Code Guru Backend
-
-This is the Django REST Framework backend for the Code Guru platform. It powers the AI-enhanced challenge engine, tech newsletters, and real-time playground features. Integrated with OpenAI and DeepSeek APIs.
-
+# :computer: Code Guru Frontend
+This is the frontend of the Code Guru platform, built with **React**, **Vite**, and styled using **Tailwind CSS**. It connects to a Django REST API backend and supports features like AI-driven daily challenges, newsletters, and a real-time coding playground.
 ---
-
-## 📁 Project Structure
-
+## :atom_symbol: Tech Stack
+- **React** (with Hooks)
+- **Vite** (lightweight build tool)
+- **Tailwind CSS** (utility-first styling)
+- **React Router DOM** (routing)
+- **html-react-parser** (for rendering JSX content from backend)
+- **Monaco Editor** (VSCode-like code editor)
+- **Axios or Fetch** for HTTP requests (assumed)
+---
+## :file_folder: Project Structure
 ```
-backend/
-├── account_app/        # Stores user profile data
-├── challenge_app/      # Daily coding challenges, answers, AI validation
-├── language/           # Language prompt templates
-├── newsletter_app/     # AI-generated daily tech reports
-├── playground_app/     # AI code Q&A for any language/problem
-├── user_app/           # Custom user model and auth
-├── code_guru_proj/     # Django settings, URL config
-├── manage.py
-└── requirements.txt
+frontend/
+├── index.html
+├── vite.config.js
+├── package.json
+├── src/
+│   ├── App.jsx                  # Root component
+│   ├── main.jsx                 # ReactDOM render
+│   ├── router.jsx               # App routes
+│   ├── index.css                # Tailwind + global styles
+│   ├── components/             # Reusable components
+│   │   ├── Navbar.jsx
+│   │   ├── ChallengeCard.jsx
+│   │   ├── PrivateRoute.jsx
+│   │   ├── monacoEditor.jsx
+│   ├── pages/                  # Route-based pages
+│   │   ├── HomePage.jsx
+│   │   ├── SignUpPage.jsx
+│   │   ├── LogInPage.jsx
+│   │   ├── ChallengeDailyPage.jsx
+│   │   ├── ChallengeAnswerPage.jsx
+│   │   ├── ChallengeProgressPage.jsx
+│   │   ├── PlaygroundPage.jsx
+│   │   ├── NewsletterPage.jsx
+│   │   ├── NotFoundPage.jsx
+│   └── utilities.jsx           # Shared helpers/util functions
 ```
-
 ---
-
-## 🔐 Authentication
-
-- Token-based auth via `rest_framework.authentication.TokenAuthentication`
-- Extend `TokenReq` to protect endpoints and auto-load `request.auth.user.account`
-
+## :compass: Routing
+All routes are managed via `router.jsx` using **React Router**.
+Example:
+```jsx
+<Route path="/challenge/daily" element={<ChallengeDailyPage />} />
+```
+Protected routes are wrapped using `PrivateRoute` component to ensure the user is authenticated.
 ---
-
-## 🔗 API Endpoints
-
-### Challenge API
-
-| Method | URL                                  | Description                                |
-|--------|---------------------------------------|--------------------------------------------|
-| GET    | `/api/v1/challenge/html/<date>/`     | Get or generate AI-based challenge         |
-| PUT    | `/api/v1/challenge/answer/`          | Submit user code & validate with AI        |
-| GET    | `/api/v1/challenge/answer/`          | Return solved challenges by the user       |
-
-### Newsletter API
-
-| Method | URL                                  | Description                                |
-|--------|---------------------------------------|--------------------------------------------|
-| GET    | `/api/v1/newsletter/<date>/`         | Get AI-generated newsletter (JSX format)   |
-
-### Playground API
-
-| Method | URL                                  | Description                                |
-|--------|---------------------------------------|--------------------------------------------|
-| PUT    | `/api/v1/playground/answer/`         | Ask a custom code question (AI response)   |
-
+## :brain: Key Features
+### :small_orange_diamond: Daily Challenge Page
+- Fetches and renders JSX content for a coding challenge
+- Tailwind-styled JSX is parsed and displayed using `html-react-parser`
+- Includes code submission form and language toggle
+### :small_orange_diamond: Answer Evaluation
+- User submits code
+- Sends request to backend
+- Displays feedback on whether the solution is correct (via OpenAI API)
+### :small_orange_diamond: Newsletter Page
+- Renders an AI-generated tech news report for a selected date
+- Rich JSX layout rendered using Tailwind and `html-react-parser`
+### :small_orange_diamond: Playground Page
+- Monaco editor where users can input code
+- Ask questions about code (e.g., "What does this function do?")
+- AI returns JSX-styled explanation
 ---
-
-## 🧱 Models Overview
-
-### `Challenge`
-Stores all metadata and JSX-renderable content for a challenge.
-
-- `date`, `questionLink`, `questionTitle`, `difficulty`
-- `question`, `html`
-- `input_J`, `output_J`, `input_P`, `output_P`
-
-### `Answer`
-User’s submitted solution to a challenge.
-
-- Foreign keys: `account`, `challenge`
-- `code`, `language`, `solve`
-
-### `Newsletter`
-Daily AI-written newsletter.
-
-- `date`, `html` (Tailwind JSX)
-
+## :art: Styling
+- Uses **Tailwind CSS** for layout and component styling
+- Responsive and mobile-friendly
+- Utility classes for dynamic rendering from AI
 ---
-
-## 🧠 AI Integration
-
-### DeepSeek (HTML → JSX)
-
-- Converts raw LeetCode HTML into Tailwind-compatible JSX for React frontend
-
-### OpenAI GPT-4.1
-
-- Generates example input/output
-- Validates user solutions against expectations
-- Answers user questions in playground
-- Writes tech newsletters
-
----
-
-## ⚙️ Setup
-
+## :test_tube: Development
 ```bash
-# Create virtual env
-python -m venv venv
-source venv/bin/activate
-
 # Install dependencies
-pip install -r requirements.txt
-
-# Create .env file
-touch .env
-
-#
+npm install
+# Start development server
+npm run dev
+# Build for production
+npm run build
+```
+---
+## :gear: Environment
+Update `.env` as needed:
+```
+VITE_BACKEND_URL=http://127.0.0.1:8000
+```
+---
