@@ -1,11 +1,12 @@
 # Code Guru - AI-powered Coding Mentor
 
-![Screenshot of home page](./images/homeScreenshot.png)
+![Screenshot of home page](project_docs/images/homeScreenshot.png)
 
 ## Overview
 
 Have you ever reached out for guidance on a tricky bug — only to have someone hand you the full solution, leaving you none the wiser? Code Guru flips that script. Instead of spoon‑feeding you the answer, it acts like a teacher: it offers targeted hints and nudges you toward the concept you’re missing so that when you finally crack the problem on your own.
 
+## Key Features:
 Under the hood, Code Guru combines:
 
 - **In‑Browser Playground**: Experiment interactively in our Monaco‑powered editor. Paste your code and ask the Code Guru for guidance.
@@ -15,7 +16,7 @@ Under the hood, Code Guru combines:
 
 Whether you’re untangling asynchronicity in JavaScript or mastering Python’s data structures, Code Guru is the mentor who never gives you a fish — only the right concepts to help you learn how to fish for yourself.
 
-## Tech Stack
+## Technology Stack:
 
 - **Frontend:**
 
@@ -33,7 +34,10 @@ Whether you’re untangling asynchronicity in JavaScript or mastering Python’s
   - Alfa-Leetcode-API
   - PostgreSQL
 
-## Authors
+<!-- ## Key Features:
+### **Daily LeetCode Challenges** -->
+
+## Authors:
 
 Jason Anderson - Initial Idea - @Bitterguy-code
 

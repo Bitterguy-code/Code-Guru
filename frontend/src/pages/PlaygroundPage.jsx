@@ -31,16 +31,7 @@ hello();`);
   return (
     <div className="playground_container">
       <div className="playground_left_container">
-        <label>Choose a language:</label>
-        <select
-          value={codingLanguage}
-          id="coding_language"
-          onChange={(e) => setCodingLanguage(e.target.value)}
-        >
-          <option value="javascript">JavaScript</option>
-          <option value="python">Python</option>
-        </select>
-        <br />
+        
         <div id="playground_code_container">
           <MonacoEditor
             language={codingLanguage}
@@ -48,6 +39,7 @@ hello();`);
             setEditorCode={setValue}
           />
         </div>
+
         <div className="playground_prompt">
           <br />
           <label>What is your question</label>
@@ -58,7 +50,22 @@ hello();`);
             value={userQuestion}
             onChange={(e) => setUserQuestion(e.target.value)}
           />
+          
+
+          <section className="flex gap-2">
           <button onClick={handleClick}>Ask AI</button>
+          <label>Choose a language:</label>
+
+            <select
+              value={codingLanguage}
+              id="coding_language"
+              onChange={(e) => setCodingLanguage(e.target.value)}
+            >
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+            </select>
+          </section>
+          
         </div>
       </div>
       <div className="playground_right_container ">

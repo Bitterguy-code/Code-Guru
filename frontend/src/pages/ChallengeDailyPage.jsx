@@ -51,27 +51,17 @@ export default function ChallengeDailyPage() {
 
   return (
     <div className="daily_challenge_container">
-      <div className="flex h-200">
+      <div className="flex flex-col sm:flex-row sm:h-200">
         {/* this holds 2 columns */}
-        <section className="w-1/2 p-3  overflow-auto">
+        <section className="p-3  overflow-auto  w-full sm:w-1/2">
           {dailyChallengeData ? (
             <ChallengeDisplay data={dailyChallengeData} />
           ) : null}
         </section>
 
-        <section className="w-1/2 p-3">
+        <section className="p-3 w-full sm:w-1/2">
           <div className="mx-auto h-3/4 bg-white rounded-xl shadow-md">
-            <div>
-              <label>Choose a language:</label>
-              <select
-                value={editorLanguage}
-                id="coding_language"
-                onChange={(e) => setEditorLanguage(e.target.value)}
-              >
-                <option value="javascript">JavaScript</option>
-                <option value="python">Python</option>
-              </select>
-            </div>
+            
             <MonacoEditor
               language={editorLanguage}
               editorCode={editorCode}
@@ -81,9 +71,26 @@ export default function ChallengeDailyPage() {
 
           <div className="mx-auto h-1/4 p-4 sm:p-6 lg:p-8 bg-white rounded-xl shadow-md">
             <div className="flex flex-col gap-1">
+
+
               <div className="flex gap-2">
                 <button onClick={setAPIAnswer}>Run</button>
+
+                <section>
+                  <label>Choose a language:</label>
+                  <select
+                    value={editorLanguage}
+                    id="coding_language"
+                    onChange={(e) => setEditorLanguage(e.target.value)}
+                  >
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                  </select>
+                </section>
+                
               </div>
+
+
               <div className="flex gap-2 bg-gray-100 px-1 py-0.5 rounded">
                 <h1>Input: </h1>
                 <h1>
@@ -112,6 +119,8 @@ export default function ChallengeDailyPage() {
               </div>
             </div>
           </div>
+
+
         </section>
       </div>
     </div>

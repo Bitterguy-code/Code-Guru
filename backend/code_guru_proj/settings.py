@@ -41,6 +41,8 @@ INSTALLED_APPS = [
 
     'user_app',
     'account_app',
+    'playground_app',
+    'newsletter_app',
     'language',
     'challenge_app',
 
