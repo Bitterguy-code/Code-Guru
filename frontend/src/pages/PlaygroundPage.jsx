@@ -70,7 +70,7 @@ hello();`);
       </div>
       <div className="playground_right_container ">
         <div className="playground_correction">
-          <label>Answer</label>
+          <label className="font-extrabold">Answer</label>
           {/* {parse(playgroundAnswer)} */}
 
           {/* <section>
